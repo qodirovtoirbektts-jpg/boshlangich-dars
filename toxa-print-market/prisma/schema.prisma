@@ -1,0 +1,199 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  GUEST
+  B2C
+  B2B
+  OPERATOR
+  CONTENT_MANAGER
+  ACCOUNTANT
+  SUPER_ADMIN
+}
+
+enum ProductType {
+  PRINTER
+  CONSUMABLE
+  SPARE_PART
+  PAPER
+}
+
+enum PaymentMethod {
+  CASH
+  PAYME
+  CLICK
+  UZUM_PAY
+  NASIYA
+  BANK_TRANSFER
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum OrderStatus {
+  NEW
+  PAID
+  SENT_TO_WAREHOUSE
+  PACKAGED
+  COURIER_HANDED
+  DELIVERED
+  CANCELED
+}
+
+model User {
+  id         String      @id @default(uuid())
+  phone      String      @unique
+  role       Role        @default(B2C)
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  b2bProfile B2BProfile?
+  addresses  Address[]
+  orders     Order[]
+}
+
+model B2BProfile {
+  id             String  @id @default(uuid())
+  userId         String  @unique
+  user           User    @relation(fields: [userId], references: [id])
+  companyName    String
+  inn            String  @unique
+  mfo            String?
+  bankAccount    String?
+  vatCertificate String?
+}
+
+model Address {
+  id          String    @id @default(uuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  regionId    String
+  region      Region    @relation(fields: [regionId], references: [id])
+  districtId  String?
+  district    District? @relation(fields: [districtId], references: [id])
+  addressLine String
+  lat         Float?
+  lng         Float?
+
+  orders      Order[]
+}
+
+model Category {
+  id        String     @id @default(uuid())
+  name      String
+  slug      String     @unique
+  parentId  String?
+  parent    Category?  @relation("SubCategories", fields: [parentId], references: [id])
+  children  Category[] @relation("SubCategories")
+  products  Product[]
+}
+
+model Product {
+  id             String      @id @default(uuid())
+  sku            String      @unique
+  slug           String      @unique
+  name           String
+  type           ProductType
+  brand          String
+  retailPrice    Float
+  b2bPrice       Float
+  length         Float
+  width          Float
+  height         Float
+  weight         Float
+  warranty       Int         // Oylarda (months)
+  stock          Int         @default(0)
+  categoryId     String
+  category       Category    @relation(fields: [categoryId], references: [id])
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  compatibleConsumables  ProductCompatibility[]  @relation("PrinterRelation")
+  compatiblePrinters     ProductCompatibility[]  @relation("ConsumableRelation")
+  attributes             ProductAttributeValue[]
+  orderItems             OrderItem[]
+}
+
+model ProductCompatibility {
+  printerId    String
+  consumableId String
+  printer      Product @relation("PrinterRelation", fields: [printerId], references: [id])
+  consumable   Product @relation("ConsumableRelation", fields: [consumableId], references: [id])
+
+  @@id([printerId, consumableId])
+}
+
+model Attribute {
+  id        String                  @id @default(uuid())
+  name      String                  @unique 
+  values    ProductAttributeValue[]
+}
+
+model ProductAttributeValue {
+  id          String    @id @default(uuid())
+  productId   String
+  product     Product   @relation(fields: [productId], references: [id])
+  attributeId String
+  attribute   Attribute @relation(fields: [attributeId], references: [id])
+  value       String    
+
+  @@unique([productId, attributeId])
+}
+
+model Region {
+  id             String    @id @default(uuid())
+  name           String    @unique
+  basePrice      Float
+  extraKgPrice   Float
+  deliveryTime   Int       // Kunlarda (days)
+  
+  districts      District[]
+  addresses      Address[]
+}
+
+model District {
+  id       String    @id @default(uuid())
+  name     String
+  regionId String
+  region   Region    @relation(fields: [regionId], references: [id])
+
+  addresses Address[]
+}
+
+model Order {
+  id            String        @id @default(uuid())
+  code          String        @unique // TPM-XXXX
+  userId        String
+  user          User          @relation(fields: [userId], references: [id])
+  addressId     String
+  address       Address       @relation(fields: [addressId], references: [id])
+  paymentMethod PaymentMethod
+  paymentStatus PaymentStatus @default(PENDING)
+  orderStatus   OrderStatus   @default(NEW)
+  totalAmount   Float
+  trackingCode  String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  items         OrderItem[]
+}
+
+model OrderItem {
+  id        String  @id @default(uuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id])
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int
+  price     Float
+}

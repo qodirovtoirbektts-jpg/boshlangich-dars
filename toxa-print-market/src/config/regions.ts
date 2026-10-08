@@ -1,0 +1,16 @@
+export const UZBEKISTAN_REGIONS = [
+  { name: "Toshkent shahri", basePrice: 25000, extraKgPrice: 0, deliveryTime: 1 },
+  { name: "Toshkent viloyati", basePrice: 35000, extraKgPrice: 3000, deliveryTime: 2 },
+  { name: "Sirdaryo viloyati", basePrice: 35000, extraKgPrice: 3000, deliveryTime: 2 },
+  { name: "Jizzax viloyati", basePrice: 35000, extraKgPrice: 3000, deliveryTime: 2 },
+  { name: "Samarqand viloyati", basePrice: 35000, extraKgPrice: 3000, deliveryTime: 2 },
+  { name: "Qashqadaryo viloyati", basePrice: 40000, extraKgPrice: 4000, deliveryTime: 3 },
+  { name: "Surxondaryo viloyati", basePrice: 40000, extraKgPrice: 4000, deliveryTime: 3 },
+  { name: "Buxoro viloyati", basePrice: 40000, extraKgPrice: 4000, deliveryTime: 3 },
+  { name: "Navoiy viloyati", basePrice: 40000, extraKgPrice: 4000, deliveryTime: 3 },
+  { name: "Xorazm viloyati", basePrice: 45000, extraKgPrice: 5000, deliveryTime: 4 },
+  { name: "Qoraqalpog‘iston Respublikasi", basePrice: 50000, extraKgPrice: 5000, deliveryTime: 5 },
+  { name: "Farg‘ona viloyati", basePrice: 35000, extraKgPrice: 3000, deliveryTime: 2 },
+  { name: "Namangan viloyati", basePrice: 35000, extraKgPrice: 3000, deliveryTime: 2 },
+  { name: "Andijon viloyati", basePrice: 35000, extraKgPrice: 3000, deliveryTime: 2 },
+];
