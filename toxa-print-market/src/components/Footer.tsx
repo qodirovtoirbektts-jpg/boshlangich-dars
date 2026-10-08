@@ -3,6 +3,7 @@
 import React from 'react';
 import { Truck, ShieldCheck, Headphones, FileText } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import Link from 'next/link';
 
 export default function Footer() {
   const { siteSettings } = useCart();
@@ -57,6 +58,7 @@ export default function Footer() {
 
       {/* Main Footer Links */}
       <div className="max-w-7xl mx-auto py-12 px-4 md:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Col 1: Company Logo & Info */}
         <div className="space-y-3">
           <span className="text-2xl font-black text-jio-blue tracking-tighter block">
             {siteSettings.companyName.includes(' ') ? (
@@ -78,34 +80,43 @@ export default function Footer() {
           </p>
         </div>
 
+        {/* Col 2: Mahsulotlar havolalari */}
         <div>
-          <h5 className="font-black text-gray-900 text-sm mb-3">Mahsulotlar</h5>
+          <h5 className="font-black text-gray-900 text-sm mb-3">
+            {siteSettings.productsColTitle}
+          </h5>
           <ul className="space-y-2 text-xs">
-            <li><a href="#catalog" className="hover:text-jio-blue transition">Lazerli Printerlar (HP, Canon)</a></li>
-            <li><a href="#catalog" className="hover:text-jio-blue transition">Siyohli CISS MFP (Epson EcoTank)</a></li>
-            <li><a href="#catalog" className="hover:text-jio-blue transition">Katta Formatli Plotterlar (HP DesignJet)</a></li>
-            <li><a href="#catalog" className="hover:text-jio-blue transition">Original Toner va Siyoh Kartrijlari</a></li>
-            <li><a href="#catalog" className="hover:text-jio-blue transition">Fotokog'oz va Aksessuarlar</a></li>
+            <li><Link href="/#catalog" className="hover:text-jio-blue transition">{siteSettings.productLink1Text}</Link></li>
+            <li><Link href="/#catalog" className="hover:text-jio-blue transition">{siteSettings.productLink2Text}</Link></li>
+            <li><Link href="/#catalog" className="hover:text-jio-blue transition">{siteSettings.productLink3Text}</Link></li>
+            <li><Link href="/#catalog" className="hover:text-jio-blue transition">{siteSettings.productLink4Text}</Link></li>
+            <li><Link href="/#catalog" className="hover:text-jio-blue transition">{siteSettings.productLink5Text}</Link></li>
           </ul>
         </div>
 
+        {/* Col 3: B2B va Xizmatlar havolalari */}
         <div>
-          <h5 className="font-black text-gray-900 text-sm mb-3">B2B va Xizmatlar</h5>
+          <h5 className="font-black text-gray-900 text-sm mb-3">
+            {siteSettings.servicesColTitle}
+          </h5>
           <ul className="space-y-2 text-xs">
-            <li><a href="#b2b-section" className="hover:text-jio-blue transition">Didox elektron schyot-fakturalar</a></li>
-            <li><a href="#b2b-section" className="hover:text-jio-blue transition">1C ombor qoldiqlari sinxronizatsiyasi</a></li>
-            <li><a href="#catalog" className="hover:text-jio-blue transition">Kafolat va Servis xizmati</a></li>
-            <li><a href="#catalog" className="hover:text-jio-blue transition">14 hudud yetkazib berish tariflari</a></li>
-            <li><a href="#b2b-section" className="hover:text-jio-blue transition">Ulgurji xaridlar bo'limi</a></li>
+            <li><Link href="/#b2b-section" className="hover:text-jio-blue transition">{siteSettings.serviceLink1Text}</Link></li>
+            <li><Link href="/#b2b-section" className="hover:text-jio-blue transition">{siteSettings.serviceLink2Text}</Link></li>
+            <li><Link href="/#catalog" className="hover:text-jio-blue transition">{siteSettings.serviceLink3Text}</Link></li>
+            <li><Link href="/#catalog" className="hover:text-jio-blue transition">{siteSettings.serviceLink4Text}</Link></li>
+            <li><Link href="/#b2b-section" className="hover:text-jio-blue transition">{siteSettings.serviceLink5Text}</Link></li>
           </ul>
         </div>
 
+        {/* Col 4: Bog'lanish */}
         <div>
-          <h5 className="font-black text-gray-900 text-sm mb-3">Bog'lanish</h5>
+          <h5 className="font-black text-gray-900 text-sm mb-3">
+            {siteSettings.contactsColTitle}
+          </h5>
           <div className="space-y-2 text-xs">
-            <p><strong>Yagona aloqa markazi:</strong> {siteSettings.phone}</p>
-            <p><strong>Telegram:</strong> {siteSettings.telegram}</p>
-            <p><strong>Email:</strong> {siteSettings.email}</p>
+            <p><strong>{siteSettings.phoneLabel}</strong> {siteSettings.phone}</p>
+            <p><strong>{siteSettings.telegramLabel}</strong> {siteSettings.telegram}</p>
+            <p><strong>{siteSettings.emailLabel}</strong> {siteSettings.email}</p>
             <p className="text-gray-400 text-[11px] pt-2">
               {siteSettings.workingHours}
             </p>

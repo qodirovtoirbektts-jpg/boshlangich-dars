@@ -20,9 +20,29 @@ export interface SiteSettings {
   companyDescription: string;
   address: string;
 
-  // Aloqa & Kontaktlar
+  // Footer 2-Ustun: Mahsulotlar havolalari
+  productsColTitle: string;
+  productLink1Text: string;
+  productLink2Text: string;
+  productLink3Text: string;
+  productLink4Text: string;
+  productLink5Text: string;
+
+  // Footer 3-Ustun: B2B va Xizmatlar havolalari
+  servicesColTitle: string;
+  serviceLink1Text: string;
+  serviceLink2Text: string;
+  serviceLink3Text: string;
+  serviceLink4Text: string;
+  serviceLink5Text: string;
+
+  // Footer 4-Ustun: Bog'lanish & Kontaktlar
+  contactsColTitle: string;
+  phoneLabel: string;
   phone: string;
+  telegramLabel: string;
   telegram: string;
+  emailLabel: string;
   email: string;
   workingHours: string;
 
@@ -55,9 +75,29 @@ export const DEFAULT_SITE_SETTINGS: SiteSettings = {
   companyDescription: "O'zbekiston bo'ylab barcha toifadagi mijozlar uchun printerlar, skanerlar, plotterlar va original sarf materiallarining B2C hamda B2B onlayn distribyutsiyasi.",
   address: "Toshkent sh., Chilonzor tumani, Bunyodkor shox ko'chasi 42-uy",
 
-  // Contacts
+  // Footer 2-Ustun: Mahsulotlar
+  productsColTitle: 'Mahsulotlar',
+  productLink1Text: 'Lazerli Printerlar (HP, Canon)',
+  productLink2Text: 'Siyohli CISS MFP (Epson EcoTank)',
+  productLink3Text: 'Katta Formatli Plotterlar (HP DesignJet)',
+  productLink4Text: 'Original Toner va Siyoh Kartrijlari',
+  productLink5Text: "Fotokog'oz va Aksessuarlar",
+
+  // Footer 3-Ustun: B2B va Xizmatlar
+  servicesColTitle: 'B2B va Xizmatlar',
+  serviceLink1Text: 'Didox elektron schyot-fakturalar',
+  serviceLink2Text: '1C ombor qoldiqlari sinxronizatsiyasi',
+  serviceLink3Text: 'Kafolat va Servis xizmati',
+  serviceLink4Text: '14 hudud yetkazib berish tariflari',
+  serviceLink5Text: "Ulgurji xaridlar bo'limi",
+
+  // Footer 4-Ustun: Bog'lanish
+  contactsColTitle: "Bog'lanish",
+  phoneLabel: 'Yagona aloqa markazi:',
   phone: '+998 (71) 200-00-00',
+  telegramLabel: 'Telegram:',
   telegram: '@toxaprint_support',
+  emailLabel: 'Email:',
   email: 'info@toxaprint.uz',
   workingHours: 'Dushanba - Shanba: 09:00 dan 19:00 gacha',
 

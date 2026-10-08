@@ -1125,21 +1125,190 @@ export default function AdminPage() {
               </div>
             </div>
 
-            {/* 4. CONTACTS */}
+            {/* 4. FOOTER 2-USTUN: MAHSULOTLAR */}
+            <div className="space-y-4 p-5 bg-indigo-50/40 rounded-2xl border border-indigo-100">
+              <h4 className="font-black text-sm text-indigo-950 flex items-center gap-2">
+                <Package className="w-4 h-4 text-indigo-700" />
+                4. Footer "Mahsulotlar" Ustuni Matnlari
+              </h4>
+
+              <div>
+                <label className="block text-xs font-bold text-gray-700 mb-1">
+                  Ustun Katta Sarlavhasi:
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={formSiteSettings.productsColTitle}
+                  onChange={(e) => setFormSiteSettings({ ...formSiteSettings, productsColTitle: e.target.value })}
+                  className="w-full bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:border-indigo-600 focus:outline-none"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-[11px] font-bold text-gray-600 mb-1">1-Havola Matni:</label>
+                  <input
+                    type="text"
+                    required
+                    value={formSiteSettings.productLink1Text}
+                    onChange={(e) => setFormSiteSettings({ ...formSiteSettings, productLink1Text: e.target.value })}
+                    className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-xs font-medium"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[11px] font-bold text-gray-600 mb-1">2-Havola Matni:</label>
+                  <input
+                    type="text"
+                    required
+                    value={formSiteSettings.productLink2Text}
+                    onChange={(e) => setFormSiteSettings({ ...formSiteSettings, productLink2Text: e.target.value })}
+                    className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-xs font-medium"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[11px] font-bold text-gray-600 mb-1">3-Havola Matni:</label>
+                  <input
+                    type="text"
+                    required
+                    value={formSiteSettings.productLink3Text}
+                    onChange={(e) => setFormSiteSettings({ ...formSiteSettings, productLink3Text: e.target.value })}
+                    className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-xs font-medium"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[11px] font-bold text-gray-600 mb-1">4-Havola Matni:</label>
+                  <input
+                    type="text"
+                    required
+                    value={formSiteSettings.productLink4Text}
+                    onChange={(e) => setFormSiteSettings({ ...formSiteSettings, productLink4Text: e.target.value })}
+                    className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-xs font-medium"
+                  />
+                </div>
+                <div className="md:col-span-2">
+                  <label className="block text-[11px] font-bold text-gray-600 mb-1">5-Havola Matni:</label>
+                  <input
+                    type="text"
+                    required
+                    value={formSiteSettings.productLink5Text}
+                    onChange={(e) => setFormSiteSettings({ ...formSiteSettings, productLink5Text: e.target.value })}
+                    className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-xs font-medium"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* 5. FOOTER 3-USTUN: B2B VA XIZMATLAR */}
+            <div className="space-y-4 p-5 bg-purple-50/40 rounded-2xl border border-purple-100">
+              <h4 className="font-black text-sm text-purple-950 flex items-center gap-2">
+                <Building2 className="w-4 h-4 text-purple-700" />
+                5. Footer "B2B va Xizmatlar" Ustuni Matnlari
+              </h4>
+
+              <div>
+                <label className="block text-xs font-bold text-gray-700 mb-1">
+                  Ustun Katta Sarlavhasi:
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={formSiteSettings.servicesColTitle}
+                  onChange={(e) => setFormSiteSettings({ ...formSiteSettings, servicesColTitle: e.target.value })}
+                  className="w-full bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:border-purple-600 focus:outline-none"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-[11px] font-bold text-gray-600 mb-1">1-Havola Matni:</label>
+                  <input
+                    type="text"
+                    required
+                    value={formSiteSettings.serviceLink1Text}
+                    onChange={(e) => setFormSiteSettings({ ...formSiteSettings, serviceLink1Text: e.target.value })}
+                    className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-xs font-medium"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[11px] font-bold text-gray-600 mb-1">2-Havola Matni:</label>
+                  <input
+                    type="text"
+                    required
+                    value={formSiteSettings.serviceLink2Text}
+                    onChange={(e) => setFormSiteSettings({ ...formSiteSettings, serviceLink2Text: e.target.value })}
+                    className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-xs font-medium"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[11px] font-bold text-gray-600 mb-1">3-Havola Matni:</label>
+                  <input
+                    type="text"
+                    required
+                    value={formSiteSettings.serviceLink3Text}
+                    onChange={(e) => setFormSiteSettings({ ...formSiteSettings, serviceLink3Text: e.target.value })}
+                    className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-xs font-medium"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[11px] font-bold text-gray-600 mb-1">4-Havola Matni:</label>
+                  <input
+                    type="text"
+                    required
+                    value={formSiteSettings.serviceLink4Text}
+                    onChange={(e) => setFormSiteSettings({ ...formSiteSettings, serviceLink4Text: e.target.value })}
+                    className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-xs font-medium"
+                  />
+                </div>
+                <div className="md:col-span-2">
+                  <label className="block text-[11px] font-bold text-gray-600 mb-1">5-Havola Matni:</label>
+                  <input
+                    type="text"
+                    required
+                    value={formSiteSettings.serviceLink5Text}
+                    onChange={(e) => setFormSiteSettings({ ...formSiteSettings, serviceLink5Text: e.target.value })}
+                    className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-xs font-medium"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* 6. FOOTER 4-USTUN: BOG'LANISH & KONTAKTLAR */}
             <div className="space-y-4 p-5 bg-emerald-50/40 rounded-2xl border border-emerald-100">
               <h4 className="font-black text-sm text-emerald-950 flex items-center gap-2">
                 <Phone className="w-4 h-4 text-emerald-700" />
-                4. Bog'lanish & Kontakt Ma'lumotlari
+                6. Footer "Bog'lanish" Ustuni & Kontaktlar
               </h4>
+
+              <div>
+                <label className="block text-xs font-bold text-gray-700 mb-1">
+                  Ustun Katta Sarlavhasi:
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={formSiteSettings.contactsColTitle}
+                  onChange={(e) => setFormSiteSettings({ ...formSiteSettings, contactsColTitle: e.target.value })}
+                  className="w-full bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:border-emerald-600 focus:outline-none"
+                />
+              </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-bold text-gray-700 mb-1">
-                    Yagona Aloqa Markazi Telefoni:
+                    Telefon Matni / Yorlig'i:
                   </label>
                   <input
                     type="text"
                     required
+                    value={formSiteSettings.phoneLabel}
+                    onChange={(e) => setFormSiteSettings({ ...formSiteSettings, phoneLabel: e.target.value })}
+                    className="w-full bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:border-emerald-600 focus:outline-none mb-1"
+                  />
+                  <input
+                    type="text"
+                    required
+                    placeholder="+998 (71) 200-00-00"
                     value={formSiteSettings.phone}
                     onChange={(e) => setFormSiteSettings({ ...formSiteSettings, phone: e.target.value })}
                     className="w-full bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:border-emerald-600 focus:outline-none"
@@ -1148,11 +1317,19 @@ export default function AdminPage() {
 
                 <div>
                   <label className="block text-xs font-bold text-gray-700 mb-1">
-                    Telegram Aloqa:
+                    Telegram Matni / Yorlig'i:
                   </label>
                   <input
                     type="text"
                     required
+                    value={formSiteSettings.telegramLabel}
+                    onChange={(e) => setFormSiteSettings({ ...formSiteSettings, telegramLabel: e.target.value })}
+                    className="w-full bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:border-emerald-600 focus:outline-none mb-1"
+                  />
+                  <input
+                    type="text"
+                    required
+                    placeholder="@toxaprint_support"
                     value={formSiteSettings.telegram}
                     onChange={(e) => setFormSiteSettings({ ...formSiteSettings, telegram: e.target.value })}
                     className="w-full bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:border-emerald-600 focus:outline-none"
@@ -1161,11 +1338,19 @@ export default function AdminPage() {
 
                 <div>
                   <label className="block text-xs font-bold text-gray-700 mb-1">
-                    Email Manzil:
+                    Email Matni / Yorlig'i:
                   </label>
+                  <input
+                    type="text"
+                    required
+                    value={formSiteSettings.emailLabel}
+                    onChange={(e) => setFormSiteSettings({ ...formSiteSettings, emailLabel: e.target.value })}
+                    className="w-full bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:border-emerald-600 focus:outline-none mb-1"
+                  />
                   <input
                     type="email"
                     required
+                    placeholder="info@toxaprint.uz"
                     value={formSiteSettings.email}
                     onChange={(e) => setFormSiteSettings({ ...formSiteSettings, email: e.target.value })}
                     className="w-full bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:border-emerald-600 focus:outline-none"
@@ -1179,18 +1364,19 @@ export default function AdminPage() {
                   <input
                     type="text"
                     required
+                    placeholder="Dushanba - Shanba: 09:00 dan 19:00 gacha"
                     value={formSiteSettings.workingHours}
                     onChange={(e) => setFormSiteSettings({ ...formSiteSettings, workingHours: e.target.value })}
-                    className="w-full bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:border-emerald-600 focus:outline-none"
+                    className="w-full bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:border-emerald-600 focus:outline-none mt-7"
                   />
                 </div>
               </div>
             </div>
 
-            {/* 5. COPYRIGHT */}
+            {/* 7. COPYRIGHT */}
             <div className="space-y-2 p-5 bg-gray-50 rounded-2xl border border-gray-200">
               <label className="block text-xs font-bold text-gray-700 mb-1">
-                5. Mualliflik Huquqi (Copyright) Matni:
+                7. Mualliflik Huquqi (Copyright) Matni:
               </label>
               <input
                 type="text"
