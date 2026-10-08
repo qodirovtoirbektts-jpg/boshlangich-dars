@@ -66,6 +66,10 @@ export default function AdminPage() {
   // Site Settings Form state
   const [formSiteSettings, setFormSiteSettings] = useState(siteSettings);
 
+  React.useEffect(() => {
+    setFormSiteSettings(siteSettings);
+  }, [siteSettings]);
+
   // Search filter
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -220,9 +224,22 @@ export default function AdminPage() {
             <button
               type="button"
               onClick={() => adminLogin(adminCredentials.username, adminCredentials.password)}
-              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3.5 rounded-xl font-black text-sm transition shadow-md flex items-center justify-center gap-2"
+              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3.5 rounded-xl font-black text-sm transition shadow-md flex items-center justify-center gap-2 cursor-pointer"
             >
               <ShieldCheck className="w-4 h-4" /> 1-Klikda Tezkor Kirish ({adminCredentials.username})
+            </button>
+
+            {/* Direct Open Site Settings Tab Button */}
+            <button
+              type="button"
+              onClick={() => {
+                adminLogin(adminCredentials.username, adminCredentials.password);
+                setActiveTab('site_settings');
+              }}
+              className="w-full bg-blue-50 hover:bg-blue-100 text-blue-900 border border-blue-200 py-3 rounded-xl font-bold text-xs transition flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
+            >
+              <Globe className="w-4 h-4 text-blue-600" />
+              🌐 Sayt Matnlari & Footer Sozlamalariga O'tish
             </button>
 
             <button

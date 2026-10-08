@@ -147,7 +147,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       if (savedAdminAuth) setAdminCredentials(JSON.parse(savedAdminAuth));
 
       const savedSettings = localStorage.getItem('tpm_site_settings');
-      if (savedSettings) setSiteSettings(JSON.parse(savedSettings));
+      if (savedSettings) {
+        try {
+          const parsed = JSON.parse(savedSettings);
+          setSiteSettings({ ...DEFAULT_SITE_SETTINGS, ...parsed });
+        } catch {
+          setSiteSettings(DEFAULT_SITE_SETTINGS);
+        }
+      }
 
       const savedOrders = localStorage.getItem('tpm_orders');
       if (savedOrders) setOrders(JSON.parse(savedOrders));
