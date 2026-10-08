@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { Product, CartItem, Order, User, PaymentMethod, B2BProfile } from '../types';
+import { Product, CartItem, Order, User, PaymentMethod, B2BProfile, OrderStatus } from '../types';
 import { UZBEKISTAN_REGIONS } from '../config/regions';
 import { INITIAL_PRODUCTS } from '../data/products';
 
@@ -19,6 +19,13 @@ interface ToastInfo {
 }
 
 interface CartContextType {
+  // Products Management (Live CRUD)
+  products: Product[];
+  addProduct: (product: Product) => void;
+  updateProduct: (id: string, updated: Partial<Product>) => void;
+  deleteProduct: (id: string) => void;
+  resetProductsToDefault: () => void;
+
   cart: CartItem[];
   addToCart: (product: Product, quantity?: number, isBundle?: boolean) => void;
   removeFromCart: (productId: string) => void;
@@ -53,8 +60,14 @@ interface CartContextType {
   user: User | null;
   login: (phone: string, role: 'B2C' | 'B2B', b2bProfile?: B2BProfile) => void;
   logout: () => void;
+
+  // Admin state
+  isAdmin: boolean;
+  adminLogin: (loginStr: string, passStr: string) => boolean;
+  adminLogout: () => void;
   
   orders: Order[];
+  updateOrderStatus: (orderCode: string, newStatus: OrderStatus) => void;
   createOrder: (params: {
     recipientName: string;
     phone: string;
@@ -78,8 +91,10 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
+  const [products, setProducts] = useState<Product[]>(INITIAL_PRODUCTS);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isB2BMode, setIsB2BMode] = useState<boolean>(false);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
   
   // Modals state
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -99,6 +114,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   // Load from localStorage on mount
   useEffect(() => {
     try {
+      const savedProducts = localStorage.getItem('tpm_products');
+      if (savedProducts) setProducts(JSON.parse(savedProducts));
+
       const savedCart = localStorage.getItem('tpm_cart');
       if (savedCart) setCart(JSON.parse(savedCart));
 
@@ -107,6 +125,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
       const savedUser = localStorage.getItem('tpm_user');
       if (savedUser) setUser(JSON.parse(savedUser));
+
+      const savedAdmin = localStorage.getItem('tpm_is_admin');
+      if (savedAdmin) setIsAdmin(JSON.parse(savedAdmin));
 
       const savedOrders = localStorage.getItem('tpm_orders');
       if (savedOrders) setOrders(JSON.parse(savedOrders));
@@ -118,6 +139,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   // Save changes to localStorage
   useEffect(() => {
     try {
+      localStorage.setItem('tpm_products', JSON.stringify(products));
+    } catch {}
+  }, [products]);
+
+  useEffect(() => {
+    try {
       localStorage.setItem('tpm_cart', JSON.stringify(cart));
     } catch {}
   }, [cart]);
@@ -127,6 +154,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       localStorage.setItem('tpm_b2b_mode', JSON.stringify(isB2BMode));
     } catch {}
   }, [isB2BMode]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('tpm_is_admin', JSON.stringify(isAdmin));
+    } catch {}
+  }, [isAdmin]);
 
   useEffect(() => {
     try {
@@ -148,6 +181,55 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }, 4000);
   };
 
+  // Products CRUD
+  const addProduct = (newProduct: Product) => {
+    setProducts((prev) => [newProduct, ...prev]);
+    showToast(`"${newProduct.name}" yangi mahsulot qo'shildi!`, 'success');
+  };
+
+  const updateProduct = (id: string, updated: Partial<Product>) => {
+    setProducts((prev) =>
+      prev.map((p) => (p.id === id ? { ...p, ...updated } : p))
+    );
+    showToast("Mahsulot ma'lumotlari yangilandi!", 'success');
+  };
+
+  const deleteProduct = (id: string) => {
+    setProducts((prev) => prev.filter((p) => p.id !== id));
+    showToast("Mahsulot ro'yxatdan o'chirildi", 'info');
+  };
+
+  const resetProductsToDefault = () => {
+    setProducts(INITIAL_PRODUCTS);
+    localStorage.removeItem('tpm_products');
+    showToast("Mahsulotlar boshlang'ich holatga qaytarildi", 'info');
+  };
+
+  // Admin login: Login: "admin" (yoki 777), Parol: "admin123" (yoki 123456)
+  const adminLogin = (loginStr: string, passStr: string): boolean => {
+    const l = loginStr.trim().toLowerCase();
+    const p = passStr.trim();
+    if ((l === 'admin' || l === 'toxa' || l === '+998900000000') && (p === 'admin123' || p === 'admin' || p === '123456')) {
+      setIsAdmin(true);
+      showToast("Admin paneliga muvaffaqiyatli kirdingiz!", 'success');
+      return true;
+    }
+    showToast("Login yoki parol noto'g'ri!", 'warning');
+    return false;
+  };
+
+  const adminLogout = () => {
+    setIsAdmin(false);
+    showToast("Admin rejimidan chiqildi", 'info');
+  };
+
+  const updateOrderStatus = (orderCode: string, newStatus: OrderStatus) => {
+    setOrders((prev) =>
+      prev.map((o) => (o.code === orderCode ? { ...o, orderStatus: newStatus } : o))
+    );
+    showToast(`Buyurtma ${orderCode} statusi o'zgartirildi: ${newStatus}`, 'success');
+  };
+
   const addToCart = (product: Product, quantity = 1, isBundle = false) => {
     setCart((prev) => {
       const existing = prev.find((item) => item.product.id === product.id);
@@ -161,14 +243,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       return [...prev, { product, quantity, isBundle }];
     });
 
-    // Compatibility check notification
     if (product.type === 'CONSUMABLE') {
       const hasCompatiblePrinterInCart = cart.some((item) =>
         item.product.type === 'PRINTER' && item.product.compatibleSkus.includes(product.sku)
       );
       if (!hasCompatiblePrinterInCart) {
-        // Find printer model it is meant for
-        const targetPrinter = INITIAL_PRODUCTS.find((p) => p.sku === product.compatibleSkus[0]);
+        const targetPrinter = products.find((p) => p.sku === product.compatibleSkus[0]);
         if (targetPrinter) {
           showToast(
             `"${product.name}" savatga qo'shildi! Bu kartrij "${targetPrinter.name}" printeriga to'g'ri keladi.`,
@@ -179,7 +259,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       }
     }
 
-    showToast(`"${product.name}" muvaffaqiyatli savatchaga qo'shildi!`, 'success');
+    showToast(`"${product.name}" savatchaga qo'shildi!`, 'success');
   };
 
   const removeFromCart = (productId: string) => {
@@ -240,13 +320,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       const p = item.product;
       const count = item.quantity;
       physicalWeight += (p.weight || 1) * count;
-      // Formula: (Length * Width * Height) / 5000 (kg)
       const vol = ((p.length || 20) * (p.width || 20) * (p.height || 10)) / 5000;
       volumetricWeight += vol * count;
     });
 
     const billableWeight = Math.max(physicalWeight, volumetricWeight);
-    const extraWeight = Math.max(0, Math.ceil(billableWeight - 1)); // first 1 kg included in basePrice
+    const extraWeight = Math.max(0, Math.ceil(billableWeight - 1));
     const shippingCost = region.basePrice + (extraWeight * region.extraKgPrice);
 
     return {
@@ -260,7 +339,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const cartSubtotal = cart.reduce((sum, item) => {
     const price = isB2BMode ? item.product.b2bPrice : item.product.retailPrice;
-    const finalPrice = item.isBundle ? price * 0.9 : price; // 10% bundle discount
+    const finalPrice = item.isBundle ? price * 0.9 : price;
     return sum + finalPrice * item.quantity;
   }, 0);
 
@@ -326,6 +405,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   return (
     <CartContext.Provider
       value={{
+        products,
+        addProduct,
+        updateProduct,
+        deleteProduct,
+        resetProductsToDefault,
         cart,
         addToCart,
         removeFromCart,
@@ -354,7 +438,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         user,
         login,
         logout,
+        isAdmin,
+        adminLogin,
+        adminLogout,
         orders,
+        updateOrderStatus,
         createOrder,
         calculateShipping,
         toast,

@@ -22,7 +22,7 @@ import {
 } from 'lucide-react';
 
 export default function Home() {
-  const { setIsWizardOpen, setIsB2BPortalOpen, isB2BMode } = useCart();
+  const { setIsWizardOpen, setIsB2BPortalOpen, isB2BMode, products } = useCart();
   const catalogRef = useRef<HTMLDivElement>(null);
 
   const [activeCategory, setActiveCategory] = useState<string>('all');
@@ -34,7 +34,7 @@ export default function Home() {
   };
 
   // Filter products
-  const filteredProducts = INITIAL_PRODUCTS.filter((p) => {
+  const filteredProducts = products.filter((p) => {
     if (activeCategory !== 'all') {
       if (activeCategory === 'printers' && p.type !== 'PRINTER') return false;
       if (activeCategory === 'consumables' && p.type !== 'CONSUMABLE') return false;

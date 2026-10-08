@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { useCart } from '../context/CartContext';
 import { 
   Search, 
@@ -45,6 +46,13 @@ export default function Header() {
           </div>
 
           <div className="flex items-center gap-4">
+            <Link
+              href="/admin"
+              className="hover:text-amber-300 transition flex items-center gap-1 text-[11px] font-bold text-amber-300"
+            >
+              <ShieldCheck className="w-3 h-3 text-amber-400" />
+              Admin Panel
+            </Link>
             <button 
               onClick={() => setIsB2BPortalOpen(true)}
               className="hover:text-jio-sparkle transition flex items-center gap-1 text-[11px] font-semibold"
@@ -162,6 +170,16 @@ export default function Header() {
                 {user ? (user.role === 'B2B' ? 'B2B Kabinet' : user.phone.slice(-4)) : 'Kirish'}
               </span>
             </button>
+
+            {/* Admin Panel Quick Link */}
+            <Link
+              href="/admin"
+              className="flex items-center gap-1.5 bg-slate-900 hover:bg-black text-white px-3 py-2 rounded-full text-xs font-bold transition shadow-xs"
+              title="Admin boshqaruv paneli"
+            >
+              <ShieldCheck className="w-4 h-4 text-amber-400" />
+              <span className="hidden sm:inline">Admin</span>
+            </Link>
           </div>
 
         </div>
