@@ -31,7 +31,7 @@ export default function Footer() {
 
   return (
     <>
-      <footer className="bg-white border-t border-gray-200 mt-16 text-gray-600 text-xs">
+      <footer className="bg-white border-t border-gray-200 mt-10 sm:mt-16 text-gray-600 text-xs pb-20 md:pb-6">
         
         {/* Quick Edit Banner for Admin - FAQAT ADMIN UCHUN */}
         {isAdmin && (

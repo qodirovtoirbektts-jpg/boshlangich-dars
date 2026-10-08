@@ -168,7 +168,7 @@ export default function CartDrawer() {
 
         {/* Drawer Footer */}
         {cart.length > 0 && (
-          <div className="p-5 border-t border-gray-100 bg-white space-y-3">
+          <div className="p-4 sm:p-5 border-t border-gray-100 bg-white space-y-3 pb-safe">
             <div className="space-y-1.5 text-xs">
               <div className="flex justify-between text-gray-500">
                 <span>Mahsulotlar summasi:</span>
@@ -203,7 +203,7 @@ export default function CartDrawer() {
               </button>
               <button
                 onClick={handleProceedToCheckout}
-                className="flex-1 bg-jio-blue hover:bg-jio-dark text-white py-3 px-6 rounded-2xl font-black text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-900/10 transition active:scale-95"
+                className="flex-1 bg-jio-blue hover:bg-jio-dark text-white py-3.5 px-6 rounded-2xl font-black text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-900/10 transition active:scale-95 cursor-pointer"
               >
                 Rasmiylashtirish <ArrowRight className="w-4 h-4" />
               </button>

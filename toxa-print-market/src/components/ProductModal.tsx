@@ -47,20 +47,20 @@ export default function ProductModal() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-white rounded-3xl max-w-3xl w-full p-6 md:p-8 shadow-2xl relative border border-gray-100 max-h-[92vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="bg-white rounded-t-3xl sm:rounded-3xl max-w-3xl w-full p-4 sm:p-6 md:p-8 shadow-2xl relative border border-gray-100 max-h-[90vh] overflow-y-auto pb-safe">
         
         {/* Close button */}
         <button
           onClick={() => setSelectedProduct(null)}
-          className="absolute top-5 right-5 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 transition"
+          className="absolute top-3.5 right-3.5 sm:top-5 sm:right-5 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 transition z-10"
         >
-          <X className="w-5 h-5" />
+          <X className="w-4 h-4 sm:w-5 sm:h-5" />
         </button>
 
         {/* Top Product Hero */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center pb-6 border-b border-gray-100">
-          <div className="w-full h-64 bg-gray-50 rounded-2xl flex items-center justify-center p-4 border border-gray-100">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 items-center pb-4 sm:pb-6 border-b border-gray-100">
+          <div className="w-full h-44 sm:h-64 bg-gray-50 rounded-2xl flex items-center justify-center p-3 sm:p-4 border border-gray-100">
             <img
               src={selectedProduct.image}
               alt={selectedProduct.name}
@@ -68,71 +68,71 @@ export default function ProductModal() {
             />
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-2.5 sm:space-y-3">
             <div className="flex items-center gap-2">
-              <span className="text-xs font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-blue-50 text-jio-blue">
+              <span className="text-[10px] sm:text-xs font-black uppercase tracking-wider px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-blue-50 text-jio-blue">
                 {selectedProduct.brand}
               </span>
-              <span className="text-xs font-bold text-gray-400">
+              <span className="text-[11px] sm:text-xs font-bold text-gray-400">
                 SKU: {selectedProduct.sku}
               </span>
             </div>
 
-            <h3 className="text-xl md:text-2xl font-black text-gray-900 leading-snug">
+            <h3 className="text-base sm:text-xl md:text-2xl font-black text-gray-900 leading-snug">
               {selectedProduct.name}
             </h3>
 
-            <div className="flex items-baseline gap-3 pt-1">
-              <span className="text-2xl md:text-3xl font-black text-jio-blue">
+            <div className="flex items-baseline gap-2 pt-0.5">
+              <span className="text-xl sm:text-2xl md:text-3xl font-black text-jio-blue">
                 {displayPrice.toLocaleString('uz-UZ')} so'm
               </span>
               {isB2BMode && (
-                <span className="text-xs font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md">
-                  12% QQS bilan ulgurji
+                <span className="text-[10px] sm:text-xs font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md">
+                  12% QQS bilan
                 </span>
               )}
             </div>
 
-            <p className="text-xs text-gray-500">
-              Kafolat: <strong className="text-gray-800">{selectedProduct.warranty} oy rasmiy</strong> • Ombor qoldig'i: <strong className="text-emerald-700">{selectedProduct.stock} dona</strong>
+            <p className="text-[11px] sm:text-xs text-gray-500">
+              Kafolat: <strong className="text-gray-800">{selectedProduct.warranty} oy</strong> • Ombor: <strong className="text-emerald-700">{selectedProduct.stock} dona</strong>
             </p>
 
             {/* Quantity and Add to Cart */}
-            <div className="flex items-center gap-3 pt-3">
+            <div className="flex items-center gap-2 sm:gap-3 pt-2">
               <div className="flex items-center border border-gray-200 rounded-xl p-1 bg-gray-50">
                 <button
                   onClick={() => setQty((q) => Math.max(1, q - 1))}
-                  className="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-gray-600 hover:text-jio-blue shadow-xs"
+                  className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-white flex items-center justify-center text-gray-600 hover:text-jio-blue shadow-xs"
                 >
-                  <Minus className="w-4 h-4" />
+                  <Minus className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </button>
-                <span className="w-10 text-center font-black text-sm text-gray-800">
+                <span className="w-8 sm:w-10 text-center font-black text-xs sm:text-sm text-gray-800">
                   {qty}
                 </span>
                 <button
                   onClick={() => setQty((q) => q + 1)}
-                  className="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-gray-600 hover:text-jio-blue shadow-xs"
+                  className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-white flex items-center justify-center text-gray-600 hover:text-jio-blue shadow-xs"
                 >
-                  <Plus className="w-4 h-4" />
+                  <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </button>
               </div>
 
               <button
                 onClick={handleAddToCart}
-                className="flex-1 bg-jio-blue hover:bg-jio-dark text-white py-3 px-6 rounded-xl font-black text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-900/10 transition"
+                className="flex-1 bg-jio-blue hover:bg-jio-dark text-white py-2.5 sm:py-3 px-4 sm:px-6 rounded-xl font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-900/10 transition active:scale-95"
               >
                 <ShoppingCart className="w-4 h-4" />
-                Savatchaga Qo'shish
+                Savatchaga
               </button>
             </div>
           </div>
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex gap-4 border-b border-gray-200 mt-6 pb-2 text-xs md:text-sm font-bold">
+        <div className="flex gap-2 sm:gap-4 border-b border-gray-200 mt-4 sm:mt-6 pb-2 text-xs md:text-sm font-bold overflow-x-auto no-scrollbar">
           <button
             onClick={() => setActiveTab('specs')}
-            className={`pb-2 transition flex items-center gap-1.5 ${
+            className={`pb-1.5 transition flex items-center gap-1.5 flex-shrink-0 ${
               activeTab === 'specs'
                 ? 'text-jio-blue border-b-2 border-jio-blue'
                 : 'text-gray-500 hover:text-gray-800'

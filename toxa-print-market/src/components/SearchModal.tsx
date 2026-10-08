@@ -32,11 +32,11 @@ export default function SearchModal() {
   });
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-16 md:pt-24 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-white rounded-3xl max-w-2xl w-full p-5 md:p-6 shadow-2xl relative border border-gray-100 max-h-[80vh] flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-start justify-center p-2.5 sm:p-4 pt-3 sm:pt-16 md:pt-24 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="bg-white rounded-2xl sm:rounded-3xl max-w-2xl w-full p-4 sm:p-6 shadow-2xl relative border border-gray-100 max-h-[85vh] flex flex-col">
         
         {/* Search Header */}
-        <div className="flex items-center gap-3 pb-4 border-b border-gray-100">
+        <div className="flex items-center gap-2 sm:gap-3 pb-3 sm:pb-4 border-b border-gray-100">
           <Search className="w-5 h-5 text-jio-blue flex-shrink-0" />
           <input
             ref={inputRef}

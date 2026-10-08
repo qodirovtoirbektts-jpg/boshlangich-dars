@@ -74,38 +74,38 @@ export default function Header() {
   return (
     <>
       {/* Top Banner (Jio Announcement Bar) */}
-      <div className="bg-jio-dark text-white text-[11px] md:text-xs py-1.5 px-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1.5 font-medium">
-              <Truck className="w-3.5 h-3.5 text-jio-sparkle" />
-              {s.topDeliveryText}
+      <div className="bg-jio-dark text-white text-[10px] sm:text-[11px] md:text-xs py-1.5 px-3 sm:px-4">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 sm:gap-4 truncate">
+            <span className="flex items-center gap-1 sm:gap-1.5 font-medium truncate">
+              <Truck className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-jio-sparkle flex-shrink-0" />
+              <span className="truncate">{s.topDeliveryText}</span>
             </span>
-            <span className="hidden lg:flex items-center gap-1 opacity-75">
+            <span className="hidden md:flex items-center gap-1 opacity-75 flex-shrink-0">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
               {s.topGuaranteeText}
             </span>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
             {/* Faqat ADMIN tizimga kirgan bo'lsa: Tepani Tahrirlash va Admin boshqaruvi */}
             {isAdmin ? (
-              <div className="flex items-center gap-2 bg-amber-400/15 border border-amber-400/40 px-2.5 py-0.5 rounded-full">
+              <div className="flex items-center gap-1.5 sm:gap-2 bg-amber-400/15 border border-amber-400/40 px-2 py-0.5 rounded-full">
                 <button
                   onClick={handleOpenTopEdit}
-                  className="bg-amber-400 hover:bg-amber-300 text-slate-950 font-black px-2.5 py-0.5 rounded-full text-[10px] flex items-center gap-1 transition cursor-pointer shadow-xs"
+                  className="bg-amber-400 hover:bg-amber-300 text-slate-950 font-black px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] flex items-center gap-1 transition cursor-pointer shadow-xs"
                   title="Yuqori qatordagi barcha matnlarni bir zumda o'zgartirish"
                 >
                   <Edit3 className="w-2.5 h-2.5 text-slate-950" />
-                  Tepani Tahrirlash
+                  <span className="hidden sm:inline">Tepani Tahrirlash</span>
                 </button>
 
                 <Link
                   href="/admin"
-                  className="hover:text-amber-300 transition flex items-center gap-1 text-[11px] font-bold text-amber-300"
+                  className="hover:text-amber-300 transition flex items-center gap-1 text-[10px] sm:text-[11px] font-bold text-amber-300"
                 >
                   <ShieldCheck className="w-3 h-3 text-amber-400" />
-                  Admin Panel
+                  Admin
                 </Link>
 
                 <button
@@ -114,128 +114,150 @@ export default function Header() {
                   title="Admin rejimidan chiqish"
                 >
                   <LogOut className="w-2.5 h-2.5" />
-                  Chiqish
                 </button>
               </div>
             ) : (
               <Link
                 href="/admin"
-                className="opacity-70 hover:opacity-100 hover:text-amber-300 transition flex items-center gap-1 text-[11px] font-medium text-gray-300"
+                className="opacity-70 hover:opacity-100 hover:text-amber-300 transition flex items-center gap-1 text-[10px] sm:text-[11px] font-medium text-gray-300"
                 title="Tizim administratori kirishi"
               >
                 <ShieldCheck className="w-3 h-3 text-amber-400/70" />
                 Admin
               </Link>
             )}
+
             <button 
               onClick={() => setIsB2BPortalOpen(true)}
-              className="hover:text-jio-sparkle transition flex items-center gap-1 text-[11px] font-semibold cursor-pointer"
+              className="hidden sm:flex hover:text-jio-sparkle transition items-center gap-1 text-[11px] font-semibold cursor-pointer"
             >
               <Building2 className="w-3 h-3 text-jio-sparkle" />
               {s.topB2BText}
             </button>
+
             <a 
               href={`tel:${s.topPhoneText.replace(/[^\d+]/g, '')}`} 
-              className="flex items-center gap-1 font-semibold hover:text-jio-sparkle transition"
+              className="flex items-center gap-1 font-semibold hover:text-jio-sparkle transition text-[10px] sm:text-xs"
             >
-              <PhoneCall className="w-3 h-3 text-jio-sparkle" />
-              {s.topPhoneText}
+              <PhoneCall className="w-3 h-3 text-jio-sparkle flex-shrink-0" />
+              <span>{s.topPhoneText}</span>
             </a>
           </div>
         </div>
       </div>
 
       {/* Main Glassmorphic Sticky Header */}
-      <header className="sticky top-0 z-40 bg-white/85 backdrop-blur-md border-b border-gray-100 shadow-sm transition-all">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 h-18 py-3 flex items-center justify-between gap-4">
+      <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-xs transition-all">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-8 py-2 md:py-3">
           
-          {/* Logo */}
-          <div className="flex items-center gap-3">
-            <a href="/" className="flex flex-col">
-              <span className="text-2xl md:text-3xl font-black text-jio-blue tracking-tighter leading-none">
-                TOXA<span className="text-jio-sparkle">PRINT</span>
-              </span>
-              <span className="text-[9px] font-extrabold tracking-widest text-gray-400 uppercase mt-0.5">
-                Market & Service
-              </span>
-            </a>
-          </div>
-
-          {/* Search Trigger Bar */}
-          <div 
-            onClick={() => setIsSearchOpen(true)}
-            className="hidden md:flex items-center flex-1 max-w-md bg-gray-100/80 hover:bg-gray-100 border border-gray-200/80 rounded-full px-4 py-2 text-sm text-gray-500 cursor-pointer transition shadow-inner group"
-          >
-            <Search className="w-4 h-4 text-gray-400 group-hover:text-jio-blue mr-2 transition" />
-            <span className="flex-1 text-xs md:text-sm">Printer yoki kartrij modelini qidiring...</span>
-            <kbd className="hidden lg:inline-block text-[10px] font-semibold bg-white border border-gray-200 px-2 py-0.5 rounded text-gray-400">
-              Qidirish
-            </kbd>
-          </div>
-
-          {/* Action CTAs */}
-          <div className="flex items-center gap-2 md:gap-3">
+          {/* Main Bar Row */}
+          <div className="flex items-center justify-between gap-2 sm:gap-4">
             
-            {/* Printer Wizard Button */}
-            <button
-              onClick={() => setIsWizardOpen(true)}
-              className="hidden sm:flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-blue-50 text-jio-blue font-bold text-xs hover:bg-blue-100 transition"
-            >
-              <Sparkles className="w-3.5 h-3.5 text-jio-sparkle" />
-              <span>Printer Tanlash Ustasi</span>
-            </button>
-
-            {/* B2B Mode Toggle Button */}
-            <button
-              onClick={toggleB2BMode}
-              className={`px-3.5 py-2 rounded-full font-bold text-xs flex items-center gap-1.5 transition ${
-                isB2BMode 
-                  ? 'bg-purple-700 text-white shadow-md shadow-purple-900/20' 
-                  : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
-              }`}
-            >
-              <Building2 className="w-3.5 h-3.5" />
-              <span>{isB2BMode ? 'B2B QQS 12% Faol' : 'B2B Rejim'}</span>
-            </button>
-
-            {/* Order Tracking Button */}
-            <button
-              onClick={() => setIsTrackingOpen(true)}
-              className="p-2.5 rounded-full hover:bg-gray-100 text-gray-600 transition relative"
-              title="Buyurtmani Kuzatish"
-            >
-              <Truck className="w-5 h-5" />
-            </button>
-
-            {/* Auth Button */}
-            <button
-              onClick={() => setIsAuthOpen(true)}
-              className="p-2.5 rounded-full hover:bg-gray-100 text-gray-600 transition flex items-center gap-1"
-              title="SMS OTP Kirish"
-            >
-              <UserIcon className="w-5 h-5" />
-              {user && (
-                <span className="hidden lg:inline text-xs font-bold text-jio-blue">
-                  {user.phone.slice(-4)}
+            {/* Logo */}
+            <div className="flex items-center gap-2">
+              <a href="/" className="flex flex-col">
+                <span className="text-xl sm:text-2xl md:text-3xl font-black text-jio-blue tracking-tighter leading-none">
+                  TOXA<span className="text-jio-sparkle">PRINT</span>
                 </span>
-              )}
-            </button>
-
-            {/* Cart Flyout Trigger */}
-            <button
-              onClick={() => setIsCartOpen(true)}
-              className="relative bg-jio-blue hover:bg-jio-dark text-white p-2.5 md:px-4 md:py-2.5 rounded-full font-bold text-xs md:text-sm flex items-center gap-2 transition shadow-md shadow-blue-900/20 active:scale-95"
-            >
-              <ShoppingCart className="w-4 h-4" />
-              <span className="hidden md:inline">Savat</span>
-              {totalCartItemsCount > 0 && (
-                <span className="absolute -top-1 -right-1 md:static bg-rose-500 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-black">
-                  {totalCartItemsCount}
+                <span className="text-[8px] sm:text-[9px] font-extrabold tracking-widest text-gray-400 uppercase mt-0.5">
+                  Market & Service
                 </span>
-              )}
-            </button>
+              </a>
+            </div>
 
+            {/* Desktop Search Trigger Bar */}
+            <div 
+              onClick={() => setIsSearchOpen(true)}
+              className="hidden md:flex items-center flex-1 max-w-md bg-gray-100/80 hover:bg-gray-100 border border-gray-200/80 rounded-full px-4 py-2 text-sm text-gray-500 cursor-pointer transition shadow-inner group"
+            >
+              <Search className="w-4 h-4 text-gray-400 group-hover:text-jio-blue mr-2 transition" />
+              <span className="flex-1 text-xs md:text-sm">Printer yoki kartrij modelini qidiring...</span>
+              <kbd className="hidden lg:inline-block text-[10px] font-semibold bg-white border border-gray-200 px-2 py-0.5 rounded text-gray-400">
+                Qidirish
+              </kbd>
+            </div>
+
+            {/* Action CTAs */}
+            <div className="flex items-center gap-1.5 sm:gap-2 md:gap-3">
+              
+              {/* Printer Wizard Button (Desktop) */}
+              <button
+                onClick={() => setIsWizardOpen(true)}
+                className="hidden lg:flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-blue-50 text-jio-blue font-bold text-xs hover:bg-blue-100 transition"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-jio-sparkle" />
+                <span>Printer Tanlash</span>
+              </button>
+
+              {/* B2B Mode Toggle Button */}
+              <button
+                onClick={toggleB2BMode}
+                className={`px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full font-bold text-[11px] sm:text-xs flex items-center gap-1 sm:gap-1.5 transition active:scale-95 ${
+                  isB2BMode 
+                    ? 'bg-purple-700 text-white shadow-md shadow-purple-900/20' 
+                    : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                }`}
+              >
+                <Building2 className="w-3.5 h-3.5 flex-shrink-0" />
+                <span>{isB2BMode ? 'B2B 12%' : 'B2B'}</span>
+              </button>
+
+              {/* Order Tracking Button (Hidden on smallest mobile, accessible via bottom nav or icons) */}
+              <button
+                onClick={() => setIsTrackingOpen(true)}
+                className="hidden sm:flex p-2 sm:p-2.5 rounded-full hover:bg-gray-100 text-gray-600 transition relative"
+                title="Buyurtmani Kuzatish"
+              >
+                <Truck className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
+              </button>
+
+              {/* Auth Button */}
+              <button
+                onClick={() => setIsAuthOpen(true)}
+                className="p-1.5 sm:p-2.5 rounded-full hover:bg-gray-100 text-gray-600 transition flex items-center gap-1"
+                title="Kabinetga Kirish"
+              >
+                <UserIcon className="w-5 h-5 text-gray-700" />
+                {user && (
+                  <span className="hidden lg:inline text-xs font-bold text-jio-blue">
+                    {user.phone.slice(-4)}
+                  </span>
+                )}
+              </button>
+
+              {/* Cart Flyout Trigger */}
+              <button
+                onClick={() => setIsCartOpen(true)}
+                className="relative bg-jio-blue hover:bg-jio-dark text-white p-2 sm:px-4 sm:py-2.5 rounded-full font-bold text-xs sm:text-sm flex items-center gap-2 transition shadow-md shadow-blue-900/20 active:scale-95"
+              >
+                <ShoppingCart className="w-4 h-4" />
+                <span className="hidden sm:inline">Savat</span>
+                {totalCartItemsCount > 0 && (
+                  <span className="absolute -top-1 -right-1 sm:static bg-amber-400 text-slate-950 text-[10px] w-4.5 h-4.5 sm:w-5 sm:h-5 rounded-full flex items-center justify-center font-black">
+                    {totalCartItemsCount}
+                  </span>
+                )}
+              </button>
+
+            </div>
           </div>
+
+          {/* Mobile Dedicated Search Bar (Visible only on mobile screens) */}
+          <div className="md:hidden mt-2 pt-1 border-t border-gray-100/80">
+            <div 
+              onClick={() => setIsSearchOpen(true)}
+              className="flex items-center w-full bg-gray-100/90 active:bg-gray-200 border border-gray-200/80 rounded-2xl px-3.5 py-2 text-xs text-gray-500 cursor-pointer transition shadow-inner"
+            >
+              <Search className="w-4 h-4 text-jio-blue mr-2 flex-shrink-0" />
+              <span className="flex-1 text-[11px] font-medium text-gray-600 truncate">
+                Printer yoki kartrij modelini qidiring...
+              </span>
+              <span className="text-[10px] font-bold bg-white text-jio-blue px-2 py-0.5 rounded-lg border border-gray-200 shadow-2xs flex-shrink-0">
+                Qidiruv
+              </span>
+            </div>
+          </div>
+
         </div>
       </header>
 
