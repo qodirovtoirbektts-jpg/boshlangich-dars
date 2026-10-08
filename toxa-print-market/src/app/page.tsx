@@ -22,7 +22,7 @@ import {
 } from 'lucide-react';
 
 export default function Home() {
-  const { setIsWizardOpen, setIsB2BPortalOpen, isB2BMode, products } = useCart();
+  const { setIsWizardOpen, setIsB2BPortalOpen, isB2BMode, products, siteSettings } = useCart();
   const catalogRef = useRef<HTMLDivElement>(null);
 
   const [activeCategory, setActiveCategory] = useState<string>('all');
@@ -209,25 +209,25 @@ export default function Home() {
       </section>
 
       {/* 7. B2B va Didox Integratsiyasi Bloki */}
-      <section className="w-full bg-white rounded-3xl p-6 md:p-10 border border-gray-100 shadow-sm flex flex-col md:flex-row items-center justify-between gap-8">
+      <section id="b2b-section" className="w-full bg-white rounded-3xl p-6 md:p-10 border border-gray-100 shadow-sm flex flex-col md:flex-row items-center justify-between gap-8">
         <div className="space-y-3 max-w-xl">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-50 text-purple-700 text-xs font-bold uppercase">
             <Building2 className="w-3.5 h-3.5" />
-            B2B Korporativ Xizmatlar
+            {siteSettings.b2bBadge}
           </div>
           <h4 className="text-2xl md:text-3xl font-black text-gray-900 tracking-tight">
-            Didox orqali elektron hujjat aylanishi va 1C integratsiyasi
+            {siteSettings.b2bTitle}
           </h4>
           <p className="text-xs md:text-sm text-gray-600 leading-relaxed">
-            Korxonangiz uchun printerni rasmiy 12% QQS bilan xarid qiling. Biz Didox tizimi orqali to'lov hisob-varag'i (schyot-faktura) yuboramiz va tovarlarni 1C qoldiqlardan bir zumda ajratamiz.
+            {siteSettings.b2bDescription}
           </p>
         </div>
 
         <button
           onClick={() => setIsB2BPortalOpen(true)}
-          className="bg-purple-700 hover:bg-purple-800 text-white px-8 py-4 rounded-full font-black text-sm md:text-base flex items-center gap-2 shadow-lg shadow-purple-900/10 transition transform hover:scale-105 active:scale-95 flex-shrink-0"
+          className="bg-purple-700 hover:bg-purple-800 text-white px-8 py-4 rounded-full font-black text-sm md:text-base flex items-center gap-2 shadow-lg shadow-purple-900/10 transition transform hover:scale-105 active:scale-95 flex-shrink-0 cursor-pointer"
         >
-          <FileText className="w-4 h-4" /> B2B Portalni Ochish
+          <FileText className="w-4 h-4" /> {siteSettings.b2bButtonText}
         </button>
       </section>
 

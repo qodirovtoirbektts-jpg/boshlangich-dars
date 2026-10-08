@@ -22,7 +22,12 @@ import {
   Clock, 
   Truck, 
   RefreshCw,
-  Search
+  Search,
+  Globe,
+  Building2,
+  Phone,
+  Mail,
+  MapPin
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -39,6 +44,9 @@ export default function AdminPage() {
     adminCredentials,
     updateAdminCredentials,
     resetAdminCredentials,
+    siteSettings,
+    updateSiteSettings,
+    resetSiteSettings,
     adminLogin, 
     adminLogout 
   } = useCart();
@@ -48,12 +56,15 @@ export default function AdminPage() {
   const [passwordInput, setPasswordInput] = useState(adminCredentials.password);
 
   // Active Tab
-  const [activeTab, setActiveTab] = useState<'products' | 'orders' | 'add' | 'settings'>('products');
+  const [activeTab, setActiveTab] = useState<'products' | 'orders' | 'add' | 'settings' | 'site_settings'>('products');
 
   // Change Credentials form state
   const [newLoginInput, setNewLoginInput] = useState(adminCredentials.username);
   const [newPasswordInput, setNewPasswordInput] = useState('');
   const [confirmPasswordInput, setConfirmPasswordInput] = useState('');
+
+  // Site Settings Form state
+  const [formSiteSettings, setFormSiteSettings] = useState(siteSettings);
 
   // Search filter
   const [searchQuery, setSearchQuery] = useState('');
@@ -344,6 +355,20 @@ export default function AdminPage() {
             }`}
           >
             <ShieldCheck className="w-4 h-4" /> 🔐 Xavfsizlik & Parol
+          </button>
+
+          <button
+            onClick={() => {
+              setActiveTab('site_settings');
+              setFormSiteSettings(siteSettings);
+            }}
+            className={`px-5 py-2.5 rounded-2xl font-black text-xs md:text-sm transition flex items-center gap-2 ${
+              activeTab === 'site_settings'
+                ? 'bg-blue-600 text-white shadow-md'
+                : 'bg-blue-50 hover:bg-blue-100 text-blue-900 border border-blue-200'
+            }`}
+          >
+            <Globe className="w-4 h-4" /> 🌐 Sayt Matnlari & Footer
           </button>
         </div>
 
@@ -867,6 +892,323 @@ export default function AdminPage() {
               Admin paneldan o'zgartirganingizda esa ma'lumotlar brauzer xotirasiga (localStorage) darhol saqlanadi va qayta kirganingizda yangi login va parol ishlaydi.
             </p>
           </div>
+        </div>
+      )}
+
+      {/* TAB 5: SITE SETTINGS, B2B & FOOTER TEXTS */}
+      {activeTab === 'site_settings' && (
+        <div className="bg-white rounded-3xl p-6 md:p-8 border border-gray-100 shadow-sm space-y-8 max-w-4xl">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-100 pb-5">
+            <div className="space-y-1">
+              <h3 className="text-xl font-black text-gray-900 flex items-center gap-2">
+                <Globe className="w-6 h-6 text-blue-600" />
+                Sayt Matnlari, B2B va Footer Sozlamalari
+              </h3>
+              <p className="text-xs text-gray-500">
+                Bosh sahifadagi B2B korporativ xizmatlar, 4 ta kafolat/yetkazish afzalliklari, manzil, telefon va footer matnlarini to'liq boshqaring.
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => {
+                resetSiteSettings();
+                setFormSiteSettings(siteSettings);
+              }}
+              className="text-xs font-bold bg-gray-50 hover:bg-gray-100 text-gray-700 px-4 py-2 rounded-xl border border-gray-200 flex items-center gap-1.5 transition self-start cursor-pointer"
+            >
+              <RefreshCw className="w-3.5 h-3.5" /> Standart Matnlarga Qaytarish
+            </button>
+          </div>
+
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              updateSiteSettings(formSiteSettings);
+            }}
+            className="space-y-8"
+          >
+            {/* 1. B2B SECTION */}
+            <div className="space-y-4 p-5 bg-purple-50/50 rounded-2xl border border-purple-100">
+              <h4 className="font-black text-sm text-purple-950 flex items-center gap-2">
+                <Building2 className="w-4 h-4 text-purple-700" />
+                1. B2B Korporativ Xizmatlar Bo'limi (Bosh Sahifa)
+              </h4>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">
+                    B2B Bo'limi Belgisi (Badge):
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formSiteSettings.b2bBadge}
+                    onChange={(e) => setFormSiteSettings({ ...formSiteSettings, b2bBadge: e.target.value })}
+                    className="w-full bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:border-purple-600 focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">
+                    B2B Tugma Matni:
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formSiteSettings.b2bButtonText}
+                    onChange={(e) => setFormSiteSettings({ ...formSiteSettings, b2bButtonText: e.target.value })}
+                    className="w-full bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:border-purple-600 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-gray-700 mb-1">
+                  B2B Katta Sarlavhasi:
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={formSiteSettings.b2bTitle}
+                  onChange={(e) => setFormSiteSettings({ ...formSiteSettings, b2bTitle: e.target.value })}
+                  className="w-full bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:border-purple-600 focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-gray-700 mb-1">
+                  B2B Batafsil Tavsifi:
+                </label>
+                <textarea
+                  rows={3}
+                  required
+                  value={formSiteSettings.b2bDescription}
+                  onChange={(e) => setFormSiteSettings({ ...formSiteSettings, b2bDescription: e.target.value })}
+                  className="w-full bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:border-purple-600 focus:outline-none"
+                />
+              </div>
+            </div>
+
+            {/* 2. 4 VALUE BADGES */}
+            <div className="space-y-4 p-5 bg-blue-50/40 rounded-2xl border border-blue-100">
+              <h4 className="font-black text-sm text-blue-950 flex items-center gap-2">
+                <Truck className="w-4 h-4 text-blue-700" />
+                2. 4 ta Afzallik Kartasi (Yetkazish, Kafolat, Didox, Qo'llab-quvvatlash)
+              </h4>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Badge 1 */}
+                <div className="bg-white p-3.5 rounded-xl border border-blue-100 space-y-2">
+                  <span className="text-[11px] font-black text-blue-700 uppercase">1-Karta (Yetkazib berish)</span>
+                  <input
+                    type="text"
+                    value={formSiteSettings.badge1Title}
+                    onChange={(e) => setFormSiteSettings({ ...formSiteSettings, badge1Title: e.target.value })}
+                    placeholder="Sarlavha (14 Hududga Yetkazish)"
+                    className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-xs font-bold"
+                  />
+                  <input
+                    type="text"
+                    value={formSiteSettings.badge1Desc}
+                    onChange={(e) => setFormSiteSettings({ ...formSiteSettings, badge1Desc: e.target.value })}
+                    placeholder="Tavsif (BTS va Express tezkor pochta)"
+                    className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-xs"
+                  />
+                </div>
+
+                {/* Badge 2 */}
+                <div className="bg-white p-3.5 rounded-xl border border-blue-100 space-y-2">
+                  <span className="text-[11px] font-black text-emerald-700 uppercase">2-Karta (Rasmiy Kafolat)</span>
+                  <input
+                    type="text"
+                    value={formSiteSettings.badge2Title}
+                    onChange={(e) => setFormSiteSettings({ ...formSiteSettings, badge2Title: e.target.value })}
+                    placeholder="Sarlavha (Rasmiy Kafolat)"
+                    className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-xs font-bold"
+                  />
+                  <input
+                    type="text"
+                    value={formSiteSettings.badge2Desc}
+                    onChange={(e) => setFormSiteSettings({ ...formSiteSettings, badge2Desc: e.target.value })}
+                    placeholder="Tavsif (12 oydan 24 oygacha servis)"
+                    className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-xs"
+                  />
+                </div>
+
+                {/* Badge 3 */}
+                <div className="bg-white p-3.5 rounded-xl border border-blue-100 space-y-2">
+                  <span className="text-[11px] font-black text-purple-700 uppercase">3-Karta (Didox & 1C)</span>
+                  <input
+                    type="text"
+                    value={formSiteSettings.badge3Title}
+                    onChange={(e) => setFormSiteSettings({ ...formSiteSettings, badge3Title: e.target.value })}
+                    placeholder="Sarlavha (Didox & 1C Integratsiya)"
+                    className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-xs font-bold"
+                  />
+                  <input
+                    type="text"
+                    value={formSiteSettings.badge3Desc}
+                    onChange={(e) => setFormSiteSettings({ ...formSiteSettings, badge3Desc: e.target.value })}
+                    placeholder="Tavsif (Yuridik shaxslar uchun 12% QQS)"
+                    className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-xs"
+                  />
+                </div>
+
+                {/* Badge 4 */}
+                <div className="bg-white p-3.5 rounded-xl border border-blue-100 space-y-2">
+                  <span className="text-[11px] font-black text-amber-700 uppercase">4-Karta (Qo'llab-quvvatlash)</span>
+                  <input
+                    type="text"
+                    value={formSiteSettings.badge4Title}
+                    onChange={(e) => setFormSiteSettings({ ...formSiteSettings, badge4Title: e.target.value })}
+                    placeholder="Sarlavha (24/7 Qo'llab-quvvatlash)"
+                    className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-xs font-bold"
+                  />
+                  <input
+                    type="text"
+                    value={formSiteSettings.badge4Desc}
+                    onChange={(e) => setFormSiteSettings({ ...formSiteSettings, badge4Desc: e.target.value })}
+                    placeholder="Tavsif (+998 (71) 200-00-00)"
+                    className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-xs"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* 3. COMPANY INFO & ADDRESS */}
+            <div className="space-y-4 p-5 bg-gray-50 rounded-2xl border border-gray-200">
+              <h4 className="font-black text-sm text-gray-900 flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-rose-600" />
+                3. Do'kon Ma'lumotlari & Manzil
+              </h4>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">
+                    Do'kon / Brend Nomi:
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formSiteSettings.companyName}
+                    onChange={(e) => setFormSiteSettings({ ...formSiteSettings, companyName: e.target.value })}
+                    className="w-full bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:border-blue-600 focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">
+                    Do'kon Manzili:
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formSiteSettings.address}
+                    onChange={(e) => setFormSiteSettings({ ...formSiteSettings, address: e.target.value })}
+                    className="w-full bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:border-blue-600 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-gray-700 mb-1">
+                  Kompaniya Qisqa Tavsifi (Footer ostida):
+                </label>
+                <textarea
+                  rows={2}
+                  required
+                  value={formSiteSettings.companyDescription}
+                  onChange={(e) => setFormSiteSettings({ ...formSiteSettings, companyDescription: e.target.value })}
+                  className="w-full bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:border-blue-600 focus:outline-none"
+                />
+              </div>
+            </div>
+
+            {/* 4. CONTACTS */}
+            <div className="space-y-4 p-5 bg-emerald-50/40 rounded-2xl border border-emerald-100">
+              <h4 className="font-black text-sm text-emerald-950 flex items-center gap-2">
+                <Phone className="w-4 h-4 text-emerald-700" />
+                4. Bog'lanish & Kontakt Ma'lumotlari
+              </h4>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">
+                    Yagona Aloqa Markazi Telefoni:
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formSiteSettings.phone}
+                    onChange={(e) => setFormSiteSettings({ ...formSiteSettings, phone: e.target.value })}
+                    className="w-full bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:border-emerald-600 focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">
+                    Telegram Aloqa:
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formSiteSettings.telegram}
+                    onChange={(e) => setFormSiteSettings({ ...formSiteSettings, telegram: e.target.value })}
+                    className="w-full bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:border-emerald-600 focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">
+                    Email Manzil:
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    value={formSiteSettings.email}
+                    onChange={(e) => setFormSiteSettings({ ...formSiteSettings, email: e.target.value })}
+                    className="w-full bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:border-emerald-600 focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">
+                    Ish Tartibi va Soatlari:
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formSiteSettings.workingHours}
+                    onChange={(e) => setFormSiteSettings({ ...formSiteSettings, workingHours: e.target.value })}
+                    className="w-full bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:border-emerald-600 focus:outline-none"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* 5. COPYRIGHT */}
+            <div className="space-y-2 p-5 bg-gray-50 rounded-2xl border border-gray-200">
+              <label className="block text-xs font-bold text-gray-700 mb-1">
+                5. Mualliflik Huquqi (Copyright) Matni:
+              </label>
+              <input
+                type="text"
+                required
+                value={formSiteSettings.copyright}
+                onChange={(e) => setFormSiteSettings({ ...formSiteSettings, copyright: e.target.value })}
+                className="w-full bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:border-blue-600 focus:outline-none"
+              />
+            </div>
+
+            {/* Save Button */}
+            <button
+              type="submit"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-2xl font-black text-sm flex items-center justify-center gap-2 transition shadow-lg shadow-blue-900/10 cursor-pointer"
+            >
+              <Save className="w-4 h-4" /> Barcha Matn va Sozlamalarni Saqlash
+            </button>
+          </form>
         </div>
       )}
 

@@ -4,6 +4,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Product, CartItem, Order, User, PaymentMethod, B2BProfile, OrderStatus } from '../types';
 import { UZBEKISTAN_REGIONS } from '../config/regions';
 import { INITIAL_PRODUCTS } from '../data/products';
+import { SiteSettings, DEFAULT_SITE_SETTINGS } from '../data/siteSettings';
 
 interface ShippingCalculation {
   shippingCost: number;
@@ -85,6 +86,11 @@ interface CartContextType {
   toast: ToastInfo | null;
   showToast: (message: string, type?: 'success' | 'warning' | 'info') => void;
   
+  // Dynamic Site Settings (Footer, Contacts, B2B Banner)
+  siteSettings: SiteSettings;
+  updateSiteSettings: (newSettings: Partial<SiteSettings>) => void;
+  resetSiteSettings: () => void;
+
   // Financial totals
   cartSubtotal: number;
   cartTotalWeight: number;
@@ -102,6 +108,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     username: 'admin',
     password: 'admin123',
   });
+  const [siteSettings, setSiteSettings] = useState<SiteSettings>(DEFAULT_SITE_SETTINGS);
   
   // Modals state
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -138,6 +145,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
       const savedAdminAuth = localStorage.getItem('tpm_admin_auth');
       if (savedAdminAuth) setAdminCredentials(JSON.parse(savedAdminAuth));
+
+      const savedSettings = localStorage.getItem('tpm_site_settings');
+      if (savedSettings) setSiteSettings(JSON.parse(savedSettings));
 
       const savedOrders = localStorage.getItem('tpm_orders');
       if (savedOrders) setOrders(JSON.parse(savedOrders));
@@ -184,11 +194,37 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     } catch {}
   }, [orders]);
 
+  useEffect(() => {
+    try {
+      localStorage.setItem('tpm_site_settings', JSON.stringify(siteSettings));
+    } catch {}
+  }, [siteSettings]);
+
   const showToast = (message: string, type: 'success' | 'warning' | 'info' = 'success') => {
     setToast({ message, type });
     setTimeout(() => {
       setToast(null);
     }, 4000);
+  };
+
+  // Site Settings (Footer, Contacts, B2B banner) Update Handlers
+  const updateSiteSettings = (newSettings: Partial<SiteSettings>) => {
+    setSiteSettings((prev) => {
+      const updated = { ...prev, ...newSettings };
+      try {
+        localStorage.setItem('tpm_site_settings', JSON.stringify(updated));
+      } catch {}
+      return updated;
+    });
+    showToast("Sayt ma'lumotlari va sozlamalari yangilandi!", 'success');
+  };
+
+  const resetSiteSettings = () => {
+    setSiteSettings(DEFAULT_SITE_SETTINGS);
+    try {
+      localStorage.removeItem('tpm_site_settings');
+    } catch {}
+    showToast("Sayt matnlari standart holatga qaytarildi", 'info');
   };
 
   // Products CRUD
@@ -498,6 +534,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         resetAdminCredentials,
         adminLogin,
         adminLogout,
+        siteSettings,
+        updateSiteSettings,
+        resetSiteSettings,
         orders,
         updateOrderStatus,
         createOrder,
