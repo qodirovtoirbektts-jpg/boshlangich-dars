@@ -129,10 +129,30 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     try {
       const savedProducts = localStorage.getItem('tpm_products');
-      if (savedProducts) setProducts(JSON.parse(savedProducts));
+      if (savedProducts) {
+        const parsed: Product[] = JSON.parse(savedProducts);
+        const updatedWithRealImages = parsed.map((p) => {
+          const fresh = INITIAL_PRODUCTS.find((init) => init.id === p.id);
+          if (fresh && (!p.image || p.image.startsWith('data:image/svg'))) {
+            return { ...p, image: fresh.image };
+          }
+          return p;
+        });
+        setProducts(updatedWithRealImages);
+      }
 
       const savedCart = localStorage.getItem('tpm_cart');
-      if (savedCart) setCart(JSON.parse(savedCart));
+      if (savedCart) {
+        const parsedCart = JSON.parse(savedCart);
+        const updatedCart = parsedCart.map((item: any) => {
+          const fresh = INITIAL_PRODUCTS.find((init) => init.id === item.product?.id);
+          if (fresh && (!item.product.image || item.product.image.startsWith('data:image/svg'))) {
+            return { ...item, product: { ...item.product, image: fresh.image } };
+          }
+          return item;
+        });
+        setCart(updatedCart);
+      }
 
       const savedB2B = localStorage.getItem('tpm_b2b_mode');
       if (savedB2B) setIsB2BMode(JSON.parse(savedB2B));

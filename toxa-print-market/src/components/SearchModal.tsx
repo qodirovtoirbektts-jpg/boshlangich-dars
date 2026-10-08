@@ -37,7 +37,7 @@ export default function SearchModal() {
         
         {/* Search Header */}
         <div className="flex items-center gap-2 sm:gap-3 pb-3 sm:pb-4 border-b border-gray-100">
-          <Search className="w-5 h-5 text-jio-blue flex-shrink-0" />
+          <Search className="w-5 h-5 text-jio-blue flex-shrink-0" strokeWidth={2} aria-hidden="true" />
           <input
             ref={inputRef}
             type="text"
@@ -50,7 +50,7 @@ export default function SearchModal() {
             onClick={() => setIsSearchOpen(false)}
             className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 transition"
           >
-            <X className="w-4 h-4" />
+            <X className="w-4 h-4 flex-shrink-0" strokeWidth={2} aria-hidden="true" />
           </button>
         </div>
 
@@ -146,7 +146,7 @@ export default function SearchModal() {
                       className="text-xs font-bold bg-jio-blue hover:bg-jio-dark text-white p-2 rounded-xl transition shadow-sm"
                       title="Savatga qo'shish"
                     >
-                      <ShoppingCart className="w-4 h-4" />
+                      <ShoppingCart className="w-4 h-4 flex-shrink-0" strokeWidth={2} aria-hidden="true" />
                     </button>
                   </div>
                 </div>
@@ -155,7 +155,7 @@ export default function SearchModal() {
                 {matchingSupplies.length > 0 && (
                   <div className="pt-2 border-t border-gray-100 flex items-center justify-between text-[11px] text-gray-600">
                     <span className="flex items-center gap-1.5 font-semibold text-emerald-700">
-                      <Layers className="w-3.5 h-3.5" /> Mos kartrij: {matchingSupplies[0].name}
+                      <Layers className="w-3.5 h-3.5 flex-shrink-0" strokeWidth={2} aria-hidden="true" /> Mos kartrij: {matchingSupplies[0].name}
                     </span>
                     <button
                       onClick={() => addToCart(matchingSupplies[0], 1)}

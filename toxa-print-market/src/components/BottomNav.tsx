@@ -24,7 +24,7 @@ export default function BottomNav({ onScrollToCatalog }: BottomNavProps) {
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         className="flex flex-col items-center justify-center text-gray-600 hover:text-jio-blue active:text-jio-blue font-bold group cursor-pointer flex-1 py-1"
       >
-        <Home className="w-5 h-5 mb-0.5 text-jio-blue group-hover:scale-110 transition" />
+        <Home className="w-5 h-5 mb-0.5 text-jio-blue flex-shrink-0 group-hover:scale-110 transition" strokeWidth={2.2} aria-hidden="true" />
         <span className="text-[10px] text-jio-blue leading-none">Asosiy</span>
       </button>
 
@@ -33,7 +33,7 @@ export default function BottomNav({ onScrollToCatalog }: BottomNavProps) {
         onClick={onScrollToCatalog}
         className="flex flex-col items-center justify-center text-gray-500 hover:text-jio-blue active:text-jio-blue font-bold group cursor-pointer flex-1 py-1"
       >
-        <Grid className="w-5 h-5 mb-0.5 group-hover:scale-110 transition" />
+        <Grid className="w-5 h-5 mb-0.5 flex-shrink-0 group-hover:scale-110 transition" strokeWidth={2} aria-hidden="true" />
         <span className="text-[10px] leading-none">Katalog</span>
       </button>
 
@@ -43,7 +43,7 @@ export default function BottomNav({ onScrollToCatalog }: BottomNavProps) {
         className="flex flex-col items-center justify-center font-black group cursor-pointer flex-1 -mt-4"
       >
         <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-amber-500 to-amber-400 text-slate-950 flex items-center justify-center shadow-lg shadow-amber-500/30 border-2 border-white group-active:scale-95 transition">
-          <Sparkles className="w-5 h-5 text-slate-950" />
+          <Sparkles className="w-5 h-5 text-slate-950 flex-shrink-0" strokeWidth={2.2} aria-hidden="true" />
         </div>
         <span className="text-[9px] font-black text-amber-700 mt-0.5 leading-none">Smart Tanlov</span>
       </button>
@@ -53,7 +53,7 @@ export default function BottomNav({ onScrollToCatalog }: BottomNavProps) {
         onClick={() => setIsSearchOpen(true)}
         className="flex flex-col items-center justify-center text-gray-500 hover:text-jio-blue active:text-jio-blue font-bold group cursor-pointer flex-1 py-1"
       >
-        <Search className="w-5 h-5 mb-0.5 group-hover:scale-110 transition" />
+        <Search className="w-5 h-5 mb-0.5 flex-shrink-0 group-hover:scale-110 transition" strokeWidth={2} aria-hidden="true" />
         <span className="text-[10px] leading-none">Qidirish</span>
       </button>
 
@@ -63,7 +63,7 @@ export default function BottomNav({ onScrollToCatalog }: BottomNavProps) {
         className="relative flex flex-col items-center justify-center text-gray-500 hover:text-jio-blue active:text-jio-blue font-bold group cursor-pointer flex-1 py-1"
       >
         <div className="relative">
-          <ShoppingCart className="w-5 h-5 mb-0.5 group-hover:scale-110 transition" />
+          <ShoppingCart className="w-5 h-5 mb-0.5 flex-shrink-0 group-hover:scale-110 transition" strokeWidth={2} aria-hidden="true" />
           {totalCartItemsCount > 0 && (
             <span className="absolute -top-1 -right-2.5 bg-rose-500 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-xs">
               {totalCartItemsCount}

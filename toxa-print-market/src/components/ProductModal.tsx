@@ -55,7 +55,7 @@ export default function ProductModal() {
           onClick={() => setSelectedProduct(null)}
           className="absolute top-3.5 right-3.5 sm:top-5 sm:right-5 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 transition z-10"
         >
-          <X className="w-4 h-4 sm:w-5 sm:h-5" />
+          <X className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" strokeWidth={2} aria-hidden="true" />
         </button>
 
         {/* Top Product Hero */}
@@ -104,7 +104,7 @@ export default function ProductModal() {
                   onClick={() => setQty((q) => Math.max(1, q - 1))}
                   className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-white flex items-center justify-center text-gray-600 hover:text-jio-blue shadow-xs"
                 >
-                  <Minus className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  <Minus className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" strokeWidth={2} aria-hidden="true" />
                 </button>
                 <span className="w-8 sm:w-10 text-center font-black text-xs sm:text-sm text-gray-800">
                   {qty}
@@ -113,7 +113,7 @@ export default function ProductModal() {
                   onClick={() => setQty((q) => q + 1)}
                   className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-white flex items-center justify-center text-gray-600 hover:text-jio-blue shadow-xs"
                 >
-                  <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" strokeWidth={2} aria-hidden="true" />
                 </button>
               </div>
 
@@ -121,7 +121,7 @@ export default function ProductModal() {
                 onClick={handleAddToCart}
                 className="flex-1 bg-jio-blue hover:bg-jio-dark text-white py-2.5 sm:py-3 px-4 sm:px-6 rounded-xl font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-900/10 transition active:scale-95"
               >
-                <ShoppingCart className="w-4 h-4" />
+                <ShoppingCart className="w-4 h-4 flex-shrink-0" strokeWidth={2} aria-hidden="true" />
                 Savatchaga
               </button>
             </div>
@@ -138,27 +138,27 @@ export default function ProductModal() {
                 : 'text-gray-500 hover:text-gray-800'
             }`}
           >
-            <Cpu className="w-4 h-4" /> Texnik Xususiyatlar
+            <Cpu className="w-4 h-4 flex-shrink-0" strokeWidth={2} aria-hidden="true" /> Texnik Xususiyatlar
           </button>
           <button
             onClick={() => setActiveTab('compatibility')}
-            className={`pb-2 transition flex items-center gap-1.5 ${
+            className={`pb-2 transition flex items-center gap-1.5 flex-shrink-0 ${
               activeTab === 'compatibility'
                 ? 'text-jio-blue border-b-2 border-jio-blue'
                 : 'text-gray-500 hover:text-gray-800'
             }`}
           >
-            <Layers className="w-4 h-4" /> Mos Keluvchi Sarf Materiallari ({compatibleProducts.length})
+            <Layers className="w-4 h-4 flex-shrink-0" strokeWidth={2} aria-hidden="true" /> Mos Keluvchi Sarf Materiallari ({compatibleProducts.length})
           </button>
           <button
             onClick={() => setActiveTab('shipping')}
-            className={`pb-2 transition flex items-center gap-1.5 ${
+            className={`pb-2 transition flex items-center gap-1.5 flex-shrink-0 ${
               activeTab === 'shipping'
                 ? 'text-jio-blue border-b-2 border-jio-blue'
                 : 'text-gray-500 hover:text-gray-800'
             }`}
           >
-            <Box className="w-4 h-4" /> O'lcham & Logistika
+            <Box className="w-4 h-4 flex-shrink-0" strokeWidth={2} aria-hidden="true" /> O'lcham & Logistika
           </button>
         </div>
 
@@ -222,7 +222,7 @@ export default function ProductModal() {
                         onClick={() => handleBuyBundle(comp)}
                         className="bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-1 shadow-sm"
                       >
-                        <Sparkles className="w-3.5 h-3.5" />
+                        <Sparkles className="w-3.5 h-3.5 flex-shrink-0" strokeWidth={2} aria-hidden="true" />
                         Birgalikda Olish (-10%)
                       </button>
                     </div>
@@ -275,7 +275,7 @@ export default function ProductModal() {
             </div>
 
             <div className="flex items-center gap-2 text-xs text-gray-500">
-              <Truck className="w-4 h-4 text-jio-blue" />
+              <Truck className="w-4 h-4 text-jio-blue flex-shrink-0" strokeWidth={2} aria-hidden="true" />
               <span>O'zbekistonning 14 hududiga BTS va Express orqali eshikkacha yetkaziladi</span>
             </div>
           </div>

@@ -50,7 +50,7 @@ export default function CartDrawer() {
         <div className="p-5 border-b border-gray-100 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-jio-blue">
-              <ShoppingCart className="w-4 h-4" />
+              <ShoppingCart className="w-4 h-4 flex-shrink-0" strokeWidth={2} aria-hidden="true" />
             </div>
             <div>
               <h3 className="font-black text-lg text-gray-900 leading-none">Savatcha</h3>
@@ -64,7 +64,7 @@ export default function CartDrawer() {
             onClick={() => setIsCartOpen(false)}
             className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 transition"
           >
-            <X className="w-4 h-4" />
+            <X className="w-4 h-4 flex-shrink-0" strokeWidth={2} aria-hidden="true" />
           </button>
         </div>
 
@@ -114,7 +114,7 @@ export default function CartDrawer() {
                       </span>
                       {item.isBundle && (
                         <span className="text-[9px] font-black text-amber-700 bg-amber-100 px-1.5 py-0.5 rounded flex items-center gap-0.5">
-                          <Sparkles className="w-2.5 h-2.5" /> -10% Bundle
+                          <Sparkles className="w-2.5 h-2.5 flex-shrink-0" strokeWidth={2} aria-hidden="true" /> -10% Bundle
                         </span>
                       )}
                     </div>
@@ -139,7 +139,7 @@ export default function CartDrawer() {
                       onClick={() => removeFromCart(item.product.id)}
                       className="text-gray-400 hover:text-rose-500 transition p-1"
                     >
-                      <Trash2 className="w-3.5 h-3.5" />
+                      <Trash2 className="w-3.5 h-3.5 flex-shrink-0" strokeWidth={2} aria-hidden="true" />
                     </button>
 
                     <div className="flex items-center border border-gray-200 rounded-lg bg-white p-0.5">
@@ -147,7 +147,7 @@ export default function CartDrawer() {
                         onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
                         className="w-6 h-6 flex items-center justify-center text-gray-500 hover:text-jio-blue"
                       >
-                        <Minus className="w-3 h-3" />
+                        <Minus className="w-3 h-3 flex-shrink-0" strokeWidth={2} aria-hidden="true" />
                       </button>
                       <span className="w-6 text-center text-xs font-bold">
                         {item.quantity}
@@ -156,7 +156,7 @@ export default function CartDrawer() {
                         onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
                         className="w-6 h-6 flex items-center justify-center text-gray-500 hover:text-jio-blue"
                       >
-                        <Plus className="w-3 h-3" />
+                        <Plus className="w-3 h-3 flex-shrink-0" strokeWidth={2} aria-hidden="true" />
                       </button>
                     </div>
                   </div>
@@ -205,7 +205,7 @@ export default function CartDrawer() {
                 onClick={handleProceedToCheckout}
                 className="flex-1 bg-jio-blue hover:bg-jio-dark text-white py-3.5 px-6 rounded-2xl font-black text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-900/10 transition active:scale-95 cursor-pointer"
               >
-                Rasmiylashtirish <ArrowRight className="w-4 h-4" />
+                Rasmiylashtirish <ArrowRight className="w-4 h-4 flex-shrink-0" strokeWidth={2} aria-hidden="true" />
               </button>
             </div>
           </div>

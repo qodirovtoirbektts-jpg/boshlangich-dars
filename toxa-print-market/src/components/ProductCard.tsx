@@ -26,7 +26,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
         {product.badge && (
           <span className="text-[8px] sm:text-[10px] font-bold px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-100 flex items-center gap-0.5 sm:gap-1 max-w-[55%] truncate">
-            <Sparkles className="w-2 h-2 sm:w-2.5 sm:h-2.5 text-amber-500 flex-shrink-0" />
+            <Sparkles className="w-2 h-2 sm:w-2.5 sm:h-2.5 text-amber-500 flex-shrink-0" strokeWidth={2.2} aria-hidden="true" />
             <span className="truncate">{product.badge}</span>
           </span>
         )}
@@ -41,12 +41,13 @@ export default function ProductCard({ product }: ProductCardProps) {
           src={product.image}
           alt={product.name}
           className="w-full h-full object-contain group-hover:scale-108 transition-transform duration-500"
+          loading="lazy"
         />
 
         {/* Quick view floating overlay */}
         <div className="absolute inset-0 bg-jio-blue/10 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
           <span className="bg-white text-jio-blue font-bold text-xs px-3.5 py-1.5 rounded-full shadow-md flex items-center gap-1.5 transform translate-y-2 group-hover:translate-y-0 transition-all">
-            <Eye className="w-3.5 h-3.5" />
+            <Eye className="w-3.5 h-3.5 flex-shrink-0" strokeWidth={2} aria-hidden="true" />
             Ko'rish
           </span>
         </div>
@@ -87,7 +88,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           {/* Compatibility badge link */}
           {product.compatibleSkus.length > 0 && (
             <div className="mt-2 sm:mt-3 py-1 px-1.5 sm:px-2 rounded-lg bg-blue-50/70 border border-blue-100 text-[9px] sm:text-[11px] text-jio-blue font-semibold flex items-center gap-1 sm:gap-1.5">
-              <Layers className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-jio-sparkle flex-shrink-0" />
+              <Layers className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-jio-sparkle flex-shrink-0" strokeWidth={2} aria-hidden="true" />
               <span className="truncate">
                 Moslik: {product.compatibleSkus.join(', ')}
               </span>
@@ -120,7 +121,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               className="p-1.5 sm:p-2.5 rounded-lg sm:rounded-xl border border-gray-200 text-gray-600 hover:text-jio-blue hover:bg-gray-50 transition flex-shrink-0"
               title="Batafsil xususiyatlar"
             >
-              <Eye className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              <Eye className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" strokeWidth={2} aria-hidden="true" />
             </button>
             <button
               onClick={() => addToCart(product, 1)}
@@ -132,11 +133,11 @@ export default function ProductCard({ product }: ProductCardProps) {
             >
               {isAlreadyInCart ? (
                 <>
-                  <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> <span className="truncate">Qo'shildi</span>
+                  <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" strokeWidth={2.5} aria-hidden="true" /> <span className="truncate">Qo'shildi</span>
                 </>
               ) : (
                 <>
-                  <ShoppingCart className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> <span className="truncate">Savatga</span>
+                  <ShoppingCart className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" strokeWidth={2} aria-hidden="true" /> <span className="truncate">Savatga</span>
                 </>
               )}
             </button>

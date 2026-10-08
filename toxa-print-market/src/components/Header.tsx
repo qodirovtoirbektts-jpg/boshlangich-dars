@@ -78,11 +78,11 @@ export default function Header() {
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 sm:gap-4 truncate">
             <span className="flex items-center gap-1 sm:gap-1.5 font-medium truncate">
-              <Truck className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-jio-sparkle flex-shrink-0" />
+              <Truck className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-jio-sparkle flex-shrink-0" strokeWidth={2} aria-hidden="true" />
               <span className="truncate">{s.topDeliveryText}</span>
             </span>
             <span className="hidden md:flex items-center gap-1 opacity-75 flex-shrink-0">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" strokeWidth={2} aria-hidden="true" />
               {s.topGuaranteeText}
             </span>
           </div>
@@ -96,7 +96,7 @@ export default function Header() {
                   className="bg-amber-400 hover:bg-amber-300 text-slate-950 font-black px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] flex items-center gap-1 transition cursor-pointer shadow-xs"
                   title="Yuqori qatordagi barcha matnlarni bir zumda o'zgartirish"
                 >
-                  <Edit3 className="w-2.5 h-2.5 text-slate-950" />
+                  <Edit3 className="w-2.5 h-2.5 text-slate-950 flex-shrink-0" strokeWidth={2} aria-hidden="true" />
                   <span className="hidden sm:inline">Tepani Tahrirlash</span>
                 </button>
 
@@ -104,7 +104,7 @@ export default function Header() {
                   href="/admin"
                   className="hover:text-amber-300 transition flex items-center gap-1 text-[10px] sm:text-[11px] font-bold text-amber-300"
                 >
-                  <ShieldCheck className="w-3 h-3 text-amber-400" />
+                  <ShieldCheck className="w-3 h-3 text-amber-400 flex-shrink-0" strokeWidth={2} aria-hidden="true" />
                   Admin
                 </Link>
 
@@ -113,7 +113,7 @@ export default function Header() {
                   className="hover:text-rose-300 text-rose-400 text-[10px] font-bold flex items-center gap-0.5 transition cursor-pointer px-1 py-0.5"
                   title="Admin rejimidan chiqish"
                 >
-                  <LogOut className="w-2.5 h-2.5" />
+                  <LogOut className="w-2.5 h-2.5 flex-shrink-0" strokeWidth={2} aria-hidden="true" />
                 </button>
               </div>
             ) : (
@@ -122,7 +122,7 @@ export default function Header() {
                 className="opacity-70 hover:opacity-100 hover:text-amber-300 transition flex items-center gap-1 text-[10px] sm:text-[11px] font-medium text-gray-300"
                 title="Tizim administratori kirishi"
               >
-                <ShieldCheck className="w-3 h-3 text-amber-400/70" />
+                <ShieldCheck className="w-3 h-3 text-amber-400/70 flex-shrink-0" strokeWidth={2} aria-hidden="true" />
                 Admin
               </Link>
             )}
@@ -131,7 +131,7 @@ export default function Header() {
               onClick={() => setIsB2BPortalOpen(true)}
               className="hidden sm:flex hover:text-jio-sparkle transition items-center gap-1 text-[11px] font-semibold cursor-pointer"
             >
-              <Building2 className="w-3 h-3 text-jio-sparkle" />
+              <Building2 className="w-3 h-3 text-jio-sparkle flex-shrink-0" strokeWidth={2} aria-hidden="true" />
               {s.topB2BText}
             </button>
 
@@ -139,7 +139,7 @@ export default function Header() {
               href={`tel:${s.topPhoneText.replace(/[^\d+]/g, '')}`} 
               className="flex items-center gap-1 font-semibold hover:text-jio-sparkle transition text-[10px] sm:text-xs"
             >
-              <PhoneCall className="w-3 h-3 text-jio-sparkle flex-shrink-0" />
+              <PhoneCall className="w-3 h-3 text-jio-sparkle flex-shrink-0" strokeWidth={2} aria-hidden="true" />
               <span>{s.topPhoneText}</span>
             </a>
           </div>
@@ -170,7 +170,7 @@ export default function Header() {
               onClick={() => setIsSearchOpen(true)}
               className="hidden md:flex items-center flex-1 max-w-md bg-gray-100/80 hover:bg-gray-100 border border-gray-200/80 rounded-full px-4 py-2 text-sm text-gray-500 cursor-pointer transition shadow-inner group"
             >
-              <Search className="w-4 h-4 text-gray-400 group-hover:text-jio-blue mr-2 transition" />
+              <Search className="w-4 h-4 text-gray-400 group-hover:text-jio-blue mr-2 transition flex-shrink-0" strokeWidth={2} aria-hidden="true" />
               <span className="flex-1 text-xs md:text-sm">Printer yoki kartrij modelini qidiring...</span>
               <kbd className="hidden lg:inline-block text-[10px] font-semibold bg-white border border-gray-200 px-2 py-0.5 rounded text-gray-400">
                 Qidirish
@@ -185,7 +185,7 @@ export default function Header() {
                 onClick={() => setIsWizardOpen(true)}
                 className="hidden lg:flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-blue-50 text-jio-blue font-bold text-xs hover:bg-blue-100 transition"
               >
-                <Sparkles className="w-3.5 h-3.5 text-jio-sparkle" />
+                <Sparkles className="w-3.5 h-3.5 text-jio-sparkle flex-shrink-0" strokeWidth={2} aria-hidden="true" />
                 <span>Printer Tanlash</span>
               </button>
 
@@ -198,7 +198,7 @@ export default function Header() {
                     : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
                 }`}
               >
-                <Building2 className="w-3.5 h-3.5 flex-shrink-0" />
+                <Building2 className="w-3.5 h-3.5 flex-shrink-0" strokeWidth={2} aria-hidden="true" />
                 <span>{isB2BMode ? 'B2B 12%' : 'B2B'}</span>
               </button>
 
@@ -208,7 +208,7 @@ export default function Header() {
                 className="hidden sm:flex p-2 sm:p-2.5 rounded-full hover:bg-gray-100 text-gray-600 transition relative"
                 title="Buyurtmani Kuzatish"
               >
-                <Truck className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
+                <Truck className="w-4.5 h-4.5 sm:w-5 sm:h-5 flex-shrink-0" strokeWidth={2} aria-hidden="true" />
               </button>
 
               {/* Auth Button */}
@@ -217,7 +217,7 @@ export default function Header() {
                 className="p-1.5 sm:p-2.5 rounded-full hover:bg-gray-100 text-gray-600 transition flex items-center gap-1"
                 title="Kabinetga Kirish"
               >
-                <UserIcon className="w-5 h-5 text-gray-700" />
+                <UserIcon className="w-5 h-5 text-gray-700 flex-shrink-0" strokeWidth={2} aria-hidden="true" />
                 {user && (
                   <span className="hidden lg:inline text-xs font-bold text-jio-blue">
                     {user.phone.slice(-4)}
@@ -230,7 +230,7 @@ export default function Header() {
                 onClick={() => setIsCartOpen(true)}
                 className="relative bg-jio-blue hover:bg-jio-dark text-white p-2 sm:px-4 sm:py-2.5 rounded-full font-bold text-xs sm:text-sm flex items-center gap-2 transition shadow-md shadow-blue-900/20 active:scale-95"
               >
-                <ShoppingCart className="w-4 h-4" />
+                <ShoppingCart className="w-4 h-4 flex-shrink-0" strokeWidth={2} aria-hidden="true" />
                 <span className="hidden sm:inline">Savat</span>
                 {totalCartItemsCount > 0 && (
                   <span className="absolute -top-1 -right-1 sm:static bg-amber-400 text-slate-950 text-[10px] w-4.5 h-4.5 sm:w-5 sm:h-5 rounded-full flex items-center justify-center font-black">
@@ -248,7 +248,7 @@ export default function Header() {
               onClick={() => setIsSearchOpen(true)}
               className="flex items-center w-full bg-gray-100/90 active:bg-gray-200 border border-gray-200/80 rounded-2xl px-3.5 py-2 text-xs text-gray-500 cursor-pointer transition shadow-inner"
             >
-              <Search className="w-4 h-4 text-jio-blue mr-2 flex-shrink-0" />
+              <Search className="w-4 h-4 text-jio-blue mr-2 flex-shrink-0" strokeWidth={2} aria-hidden="true" />
               <span className="flex-1 text-[11px] font-medium text-gray-600 truncate">
                 Printer yoki kartrij modelini qidiring...
               </span>
