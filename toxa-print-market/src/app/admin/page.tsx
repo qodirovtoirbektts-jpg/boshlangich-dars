@@ -36,16 +36,24 @@ export default function AdminPage() {
     orders, 
     updateOrderStatus,
     isAdmin, 
+    adminCredentials,
+    updateAdminCredentials,
+    resetAdminCredentials,
     adminLogin, 
     adminLogout 
   } = useCart();
 
-  // Login form state
-  const [loginInput, setLoginInput] = useState('');
-  const [passwordInput, setPasswordInput] = useState('');
+  // Login form state (pre-filled with current active credentials)
+  const [loginInput, setLoginInput] = useState(adminCredentials.username);
+  const [passwordInput, setPasswordInput] = useState(adminCredentials.password);
 
   // Active Tab
-  const [activeTab, setActiveTab] = useState<'products' | 'orders' | 'add'>('products');
+  const [activeTab, setActiveTab] = useState<'products' | 'orders' | 'add' | 'settings'>('products');
+
+  // Change Credentials form state
+  const [newLoginInput, setNewLoginInput] = useState(adminCredentials.username);
+  const [newPasswordInput, setNewPasswordInput] = useState('');
+  const [confirmPasswordInput, setConfirmPasswordInput] = useState('');
 
   // Search filter
   const [searchQuery, setSearchQuery] = useState('');
@@ -191,11 +199,20 @@ export default function AdminPage() {
             {/* Hint Box for User */}
             <div className="p-3 bg-blue-50 border border-blue-100 rounded-xl text-[11px] text-jio-blue space-y-1">
               <p className="font-bold flex items-center gap-1">
-                <ShieldCheck className="w-3.5 h-3.5" /> Boshlang'ich Admin Ma'lumotlari:
+                <ShieldCheck className="w-3.5 h-3.5" /> Joriy Admin Kirish Ma'lumotlari:
               </p>
-              <p>• Login: <strong>admin</strong> (yoki <strong>toxa</strong>)</p>
-              <p>• Parol: <strong>admin123</strong> (yoki <strong>admin</strong>)</p>
+              <p>• Login: <strong>{adminCredentials.username}</strong></p>
+              <p>• Parol: <strong>{adminCredentials.password}</strong></p>
             </div>
+
+            {/* Fast 1-Click Login Button */}
+            <button
+              type="button"
+              onClick={() => adminLogin(adminCredentials.username, adminCredentials.password)}
+              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3.5 rounded-xl font-black text-sm transition shadow-md flex items-center justify-center gap-2"
+            >
+              <ShieldCheck className="w-4 h-4" /> 1-Klikda Tezkor Kirish ({adminCredentials.username})
+            </button>
 
             <button
               type="submit"
@@ -310,7 +327,23 @@ export default function AdminPage() {
                 : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200'
             }`}
           >
-            <Plus className="w-4 h-4" /> + Yangi Mahsulot Qo'shish
+            <Plus className="w-4 h-4" /> + Yangi Mahsulot
+          </button>
+
+          <button
+            onClick={() => {
+              setActiveTab('settings');
+              setNewLoginInput(adminCredentials.username);
+              setNewPasswordInput('');
+              setConfirmPasswordInput('');
+            }}
+            className={`px-5 py-2.5 rounded-2xl font-black text-xs md:text-sm transition flex items-center gap-2 ${
+              activeTab === 'settings'
+                ? 'bg-purple-700 text-white shadow-md'
+                : 'bg-purple-50 hover:bg-purple-100 text-purple-900 border border-purple-200'
+            }`}
+          >
+            <ShieldCheck className="w-4 h-4" /> 🔐 Xavfsizlik & Parol
           </button>
         </div>
 
@@ -709,6 +742,131 @@ export default function AdminPage() {
               <Plus className="w-4 h-4" /> Mahsulotni Katalogga Qo'shish
             </button>
           </form>
+        </div>
+      )}
+
+      {/* TAB 4: SECURITY & CREDENTIALS UPDATE */}
+      {activeTab === 'settings' && (
+        <div className="bg-white rounded-3xl p-6 md:p-8 border border-gray-100 shadow-sm space-y-6 max-w-2xl">
+          <div className="flex items-start justify-between">
+            <div className="space-y-1">
+              <h3 className="text-xl font-black text-gray-900 flex items-center gap-2">
+                <ShieldCheck className="w-6 h-6 text-purple-700" />
+                Admin Login va Parolni Yangilash
+              </h3>
+              <p className="text-xs text-gray-500">
+                Ushbu bo'lim orqali administrator tizimiga kirish login va maxfiy parolini o'zingiz istagandek o'zgartirishingiz mumkin.
+              </p>
+            </div>
+          </div>
+
+          {/* Current credentials status box */}
+          <div className="p-4 bg-purple-50/70 border border-purple-100 rounded-2xl flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <span className="text-[11px] font-bold text-purple-600 block">Joriy Faol Login:</span>
+              <span className="text-base font-black text-purple-950 font-mono">{adminCredentials.username}</span>
+            </div>
+            <div>
+              <span className="text-[11px] font-bold text-purple-600 block">Joriy Parol:</span>
+              <span className="text-base font-black text-purple-950 font-mono">{adminCredentials.password}</span>
+            </div>
+            <button
+              type="button"
+              onClick={resetAdminCredentials}
+              className="text-xs font-bold bg-white text-gray-700 hover:text-purple-700 px-3 py-1.5 rounded-xl border border-purple-200 shadow-xs flex items-center gap-1 transition cursor-pointer"
+            >
+              <RefreshCw className="w-3.5 h-3.5" /> Standartga Qaytarish (admin/admin123)
+            </button>
+          </div>
+
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (newPasswordInput !== confirmPasswordInput) {
+                alert("Yangi kiritilgan parollar bir-biriga mos kelmadi! Iltimos, tekshirib qayta kiriting.");
+                return;
+              }
+              const success = updateAdminCredentials(newLoginInput, newPasswordInput);
+              if (success) {
+                setNewPasswordInput('');
+                setConfirmPasswordInput('');
+              }
+            }}
+            className="space-y-4"
+          >
+            <div>
+              <label className="block text-xs font-bold text-gray-700 mb-1.5">
+                Yangi Admin Login:
+              </label>
+              <input
+                type="text"
+                required
+                placeholder="Masalan: toirbek yoki toxa_market"
+                value={newLoginInput}
+                onChange={(e) => setNewLoginInput(e.target.value)}
+                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm font-semibold focus:border-purple-600 focus:bg-white focus:outline-none transition"
+              />
+              <span className="text-[11px] text-gray-400 mt-1 block">Kamida 3 ta harf yoki raqam</span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-bold text-gray-700 mb-1.5">
+                  Yangi Maxfiy Parol:
+                </label>
+                <input
+                  type="password"
+                  required
+                  placeholder="Yangi parol kiriting"
+                  value={newPasswordInput}
+                  onChange={(e) => setNewPasswordInput(e.target.value)}
+                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm font-semibold focus:border-purple-600 focus:bg-white focus:outline-none transition"
+                />
+                <span className="text-[11px] text-gray-400 mt-1 block">Kamida 4 ta belgi</span>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-gray-700 mb-1.5">
+                  Yangi Parolni Tasdiqlang:
+                </label>
+                <input
+                  type="password"
+                  required
+                  placeholder="Parolni qayta tering"
+                  value={confirmPasswordInput}
+                  onChange={(e) => setConfirmPasswordInput(e.target.value)}
+                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm font-semibold focus:border-purple-600 focus:bg-white focus:outline-none transition"
+                />
+                <span className="text-[11px] text-gray-400 mt-1 block">Parol bilan bir xil bo'lishi shart</span>
+              </div>
+            </div>
+
+            <div className="pt-2">
+              <button
+                type="submit"
+                className="w-full bg-purple-700 hover:bg-purple-800 text-white py-3.5 rounded-2xl font-black text-sm flex items-center justify-center gap-2 transition shadow-md shadow-purple-900/10 cursor-pointer"
+              >
+                <Save className="w-4 h-4" /> Yangi Login va Parolni Saqlash
+              </button>
+            </div>
+          </form>
+
+          {/* Direct Code Update Information */}
+          <div className="p-4 bg-gray-50 rounded-2xl border border-gray-200 space-y-2 text-xs text-gray-600">
+            <p className="font-bold text-gray-900 flex items-center gap-1.5">
+              <Lock className="w-4 h-4 text-gray-700" />
+              Doimiy Kod Orqali Ham O'zgartirish Mumkinmi?
+            </p>
+            <p>
+              Ha! Agar login va parolni dastur kodining o'zida ham qotirib qo'ymoqchi bo'lsangiz:
+            </p>
+            <p className="font-mono bg-white p-2 rounded-lg border border-gray-200 text-[11px] text-gray-800">
+              Fayl: src/context/CartContext.tsx &rarr; 220-qator
+            </p>
+            <p>
+              Admin paneldan o'zgartirganingizda esa ma'lumotlar brauzer xotirasiga (localStorage) darhol saqlanadi va qayta kirganingizda yangi login va parol ishlaydi.
+            </p>
+          </div>
         </div>
       )}
 

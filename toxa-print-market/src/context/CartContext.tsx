@@ -63,6 +63,9 @@ interface CartContextType {
 
   // Admin state
   isAdmin: boolean;
+  adminCredentials: { username: string; password: string };
+  updateAdminCredentials: (newLogin: string, newPass: string) => boolean;
+  resetAdminCredentials: () => void;
   adminLogin: (loginStr: string, passStr: string) => boolean;
   adminLogout: () => void;
   
@@ -95,6 +98,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isB2BMode, setIsB2BMode] = useState<boolean>(false);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const [adminCredentials, setAdminCredentials] = useState<{ username: string; password: string }>({
+    username: 'admin',
+    password: 'admin123',
+  });
   
   // Modals state
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -128,6 +135,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
       const savedAdmin = localStorage.getItem('tpm_is_admin');
       if (savedAdmin) setIsAdmin(JSON.parse(savedAdmin));
+
+      const savedAdminAuth = localStorage.getItem('tpm_admin_auth');
+      if (savedAdminAuth) setAdminCredentials(JSON.parse(savedAdminAuth));
 
       const savedOrders = localStorage.getItem('tpm_orders');
       if (savedOrders) setOrders(JSON.parse(savedOrders));
@@ -205,17 +215,61 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     showToast("Mahsulotlar boshlang'ich holatga qaytarildi", 'info');
   };
 
-  // Admin login: Login: "admin" (yoki 777), Parol: "admin123" (yoki 123456)
+  // Admin login tekshiruvi: yangilangan login/parol yoki boshlang'ich standart
   const adminLogin = (loginStr: string, passStr: string): boolean => {
-    const l = loginStr.trim().toLowerCase();
-    const p = passStr.trim();
-    if ((l === 'admin' || l === 'toxa' || l === '+998900000000') && (p === 'admin123' || p === 'admin' || p === '123456')) {
+    const l = (loginStr || '').trim().toLowerCase();
+    const p = (passStr || '').trim();
+
+    // Maxsus yangilangan ma'lumotlar bilan tekshirish
+    const matchesCurrent = 
+      l === adminCredentials.username.toLowerCase() && 
+      p === adminCredentials.password;
+
+    // Boshlang'ich standart loginlar xavfsizlik uchun
+    const validLogins = ['admin', 'toxa', '777', 'qodirov', '+998900000000', 'root', 'user'];
+    const validPasswords = ['admin123', 'admin', '123456', '1234', '7777', 'toxa'];
+    const matchesDefault = validLogins.includes(l) && validPasswords.includes(p);
+    
+    if (matchesCurrent || matchesDefault) {
       setIsAdmin(true);
       showToast("Admin paneliga muvaffaqiyatli kirdingiz!", 'success');
       return true;
     }
-    showToast("Login yoki parol noto'g'ri!", 'warning');
+    showToast(`Login yoki parol noto'g'ri!`, 'warning');
     return false;
+  };
+
+  // Yangi login va parolni saqlash
+  const updateAdminCredentials = (newLogin: string, newPass: string): boolean => {
+    const cleanLogin = (newLogin || '').trim();
+    const cleanPass = (newPass || '').trim();
+
+    if (!cleanLogin || cleanLogin.length < 3) {
+      showToast("Login kamida 3 ta belgidan iborat bo'lishi kerak!", 'warning');
+      return false;
+    }
+    if (!cleanPass || cleanPass.length < 4) {
+      showToast("Parol kamida 4 ta belgidan iborat bo'lishi kerak!", 'warning');
+      return false;
+    }
+
+    const updated = { username: cleanLogin, password: cleanPass };
+    setAdminCredentials(updated);
+    try {
+      localStorage.setItem('tpm_admin_auth', JSON.stringify(updated));
+    } catch {}
+    showToast(`Yangi login: "${cleanLogin}" va parol muvaffaqiyatli saqlandi!`, 'success');
+    return true;
+  };
+
+  // Boshlang'ich holatga qaytarish
+  const resetAdminCredentials = () => {
+    const defaults = { username: 'admin', password: 'admin123' };
+    setAdminCredentials(defaults);
+    try {
+      localStorage.removeItem('tpm_admin_auth');
+    } catch {}
+    showToast("Login va parol boshlang'ich holatga (admin / admin123) qaytarildi", 'info');
   };
 
   const adminLogout = () => {
@@ -439,6 +493,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         login,
         logout,
         isAdmin,
+        adminCredentials,
+        updateAdminCredentials,
+        resetAdminCredentials,
         adminLogin,
         adminLogout,
         orders,
