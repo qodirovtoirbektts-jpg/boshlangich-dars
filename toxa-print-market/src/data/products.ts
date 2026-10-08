@@ -1,4 +1,5 @@
 import { Product } from '../types';
+import { PRODUCT_IMAGES } from './productImages';
 
 export const INITIAL_PRODUCTS: Product[] = [
   // 1. HP LaserJet Pro M15w
@@ -19,10 +20,10 @@ export const INITIAL_PRODUCTS: Product[] = [
     weight: 3.8,
     warranty: 12,
     stock: 18,
-    image: 'https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?w=600&auto=format&fit=crop&q=80',
+    image: PRODUCT_IMAGES.hpM15w,
     specs: {
       technology: 'Monoxrom lazerli bosma',
-      speed: '19 varaq/daqiqagacha (A4)',
+      speed: '19 varaq/daqigacha (A4)',
       resolution: '600 x 600 dpi (HP FastRes 600)',
       format: 'A4, A5, A6, Konvertlar',
       connectivity: 'Wi-Fi 802.11b/g/n, Yuqori tezlikdagi USB 2.0, HP Smart App',
@@ -51,7 +52,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     weight: 3.9,
     warranty: 12,
     stock: 24,
-    image: 'https://images.unsplash.com/photo-1588619461230-0eb537b0d996?w=600&auto=format&fit=crop&q=80',
+    image: PRODUCT_IMAGES.epsonL3250,
     specs: {
       technology: 'Micro Piezo™ bosma kallagi (CISS o\'rnatilgan)',
       speed: '33 varaq/daq (qora-oq), 15 varaq/daq (rangli)',
@@ -83,7 +84,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     weight: 6.4,
     warranty: 12,
     stock: 15,
-    image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&auto=format&fit=crop&q=80',
+    image: PRODUCT_IMAGES.canonG2420,
     specs: {
       technology: 'Chayqalmaydigan uzluksiz siyoh tizimi (CISS MegaTank)',
       speed: '9.1 ipm (qora), 5.0 ipm (rangli)',
@@ -115,7 +116,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     weight: 29.5,
     warranty: 24,
     stock: 5,
-    image: 'https://images.unsplash.com/photo-1563770660941-20978e870e26?w=600&auto=format&fit=crop&q=80',
+    image: PRODUCT_IMAGES.hpT650,
     specs: {
       technology: 'HP Thermal Inkjet (Muhandislik va loyihalash)',
       speed: '26 soniya/A1 chizma (soatiga 81 A1 bosma)',
@@ -147,7 +148,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     weight: 28.7,
     warranty: 12,
     stock: 8,
-    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&auto=format&fit=crop&q=80',
+    image: PRODUCT_IMAGES.canonIr2206,
     specs: {
       technology: 'Lazerli monoxrom A3/A4 ko\'p funksiyali',
       speed: '22 varaq/daq (A4), 11 varaq/daq (A3)',
@@ -179,7 +180,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     weight: 12.6,
     warranty: 12,
     stock: 12,
-    image: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=600&auto=format&fit=crop&q=80',
+    image: PRODUCT_IMAGES.hpM428dw,
     specs: {
       technology: 'Lazerli tezkor bosma va avtomatik 2 tomonlama (Dupleks)',
       speed: '38 varaq/daqiqagacha',
@@ -213,7 +214,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     weight: 0.55,
     warranty: 6,
     stock: 85,
-    image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=80',
+    image: PRODUCT_IMAGES.hp44a,
     specs: {
       technology: 'Original Lazer Toner',
       yieldPages: '1 000 standart varaq (ISO/IEC 19752)',
@@ -241,7 +242,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     weight: 0.65,
     warranty: 6,
     stock: 120,
-    image: 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=600&auto=format&fit=crop&q=80',
+    image: PRODUCT_IMAGES.epson103,
     specs: {
       technology: 'Original suv asosidagi va pigmentli siyoh (65ml har bir idish)',
       yieldPages: '4 500 qora-oq, 7 500 rangli sahifa',
@@ -269,7 +270,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     weight: 0.6,
     warranty: 6,
     stock: 95,
-    image: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=600&auto=format&fit=crop&q=80',
+    image: PRODUCT_IMAGES.canonGi41,
     specs: {
       technology: 'Canon Original GI-41 PGBK (135ml) + Rangli (70ml x 3)',
       yieldPages: '6 000 qora, 7 700 rangli sahifalar',
@@ -297,7 +298,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     weight: 0.8,
     warranty: 12,
     stock: 22,
-    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&auto=format&fit=crop&q=80',
+    image: PRODUCT_IMAGES.hp712,
     specs: {
       technology: 'HP Bright Office Inks (Yuqori aniqlikdagi chizmalar uchun)',
       yieldPages: 'SAPR va fotorejalar uchun yuqori aniqlik',
@@ -325,7 +326,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     weight: 1.2,
     warranty: 6,
     stock: 40,
-    image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=80',
+    image: PRODUCT_IMAGES.canonCExv42,
     specs: {
       technology: 'Og\'ir yuklamali korporativ toner',
       yieldPages: '10 200 varaq (5% qoplama bilan A4)',
@@ -353,7 +354,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     weight: 0.95,
     warranty: 6,
     stock: 35,
-    image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=80',
+    image: PRODUCT_IMAGES.hp59a,
     specs: {
       technology: 'JetIntelligence texnologiyali aqlli toner',
       yieldPages: '3 000 sahifa',
