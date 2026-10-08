@@ -27,7 +27,9 @@ import {
   Building2,
   Phone,
   Mail,
-  MapPin
+  MapPin,
+  Eye,
+  EyeOff
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -51,9 +53,12 @@ export default function AdminPage() {
     adminLogout 
   } = useCart();
 
-  // Login form state (pre-filled with current active credentials)
-  const [loginInput, setLoginInput] = useState(adminCredentials.username);
-  const [passwordInput, setPasswordInput] = useState(adminCredentials.password);
+  // Login form state (empty by default for security)
+  const [loginInput, setLoginInput] = useState('');
+  const [passwordInput, setPasswordInput] = useState('');
+  const [showLoginPassword, setShowLoginPassword] = useState(false);
+  const [showSettingsPassword, setShowSettingsPassword] = useState(false);
+  const [loginError, setLoginError] = useState('');
 
   // Active Tab
   const [activeTab, setActiveTab] = useState<'products' | 'orders' | 'add' | 'settings' | 'site_settings'>('products');
@@ -92,7 +97,14 @@ export default function AdminPage() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    adminLogin(loginInput, passwordInput);
+    setLoginError('');
+    const success = adminLogin(loginInput, passwordInput);
+    if (!success) {
+      setLoginError("Login yoki parol noto'g'ri kiritildi!");
+    } else {
+      setLoginInput('');
+      setPasswordInput('');
+    }
   };
 
   const handleStartEdit = (p: Product) => {
@@ -178,9 +190,16 @@ export default function AdminPage() {
               Toxa Print Admin Boshqaruv
             </h2>
             <p className="text-xs text-gray-500">
-              Mahsulotlar, narxlar, ombor va buyurtmalarni to'liq boshqarish paneli
+              Faqat administrator uchun himoyalangan boshqaruv paneli
             </p>
           </div>
+
+          {loginError && (
+            <div className="mb-4 p-3 bg-rose-50 border border-rose-200 text-rose-700 rounded-xl text-xs font-bold flex items-center gap-2">
+              <X className="w-4 h-4 shrink-0" />
+              <span>{loginError}</span>
+            </div>
+          )}
 
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
@@ -190,9 +209,13 @@ export default function AdminPage() {
               <input
                 type="text"
                 required
-                placeholder="admin"
+                autoComplete="username"
+                placeholder="Admin loginini kiriting"
                 value={loginInput}
-                onChange={(e) => setLoginInput(e.target.value)}
+                onChange={(e) => {
+                  setLoginInput(e.target.value);
+                  if (loginError) setLoginError('');
+                }}
                 className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm font-semibold focus:border-jio-blue focus:bg-white focus:outline-none transition"
               />
             </div>
@@ -201,50 +224,33 @@ export default function AdminPage() {
               <label className="block text-xs font-bold text-gray-700 mb-1">
                 Parol:
               </label>
-              <input
-                type="password"
-                required
-                placeholder="admin123"
-                value={passwordInput}
-                onChange={(e) => setPasswordInput(e.target.value)}
-                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm font-semibold focus:border-jio-blue focus:bg-white focus:outline-none transition"
-              />
+              <div className="relative">
+                <input
+                  type={showLoginPassword ? 'text' : 'password'}
+                  required
+                  autoComplete="current-password"
+                  placeholder="Maxfiy parolni kiriting"
+                  value={passwordInput}
+                  onChange={(e) => {
+                    setPasswordInput(e.target.value);
+                    if (loginError) setLoginError('');
+                  }}
+                  className="w-full bg-gray-50 border border-gray-200 rounded-xl pl-4 pr-11 py-3 text-sm font-semibold focus:border-jio-blue focus:bg-white focus:outline-none transition"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowLoginPassword(!showLoginPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition p-1 cursor-pointer"
+                  title={showLoginPassword ? "Parolni yashirish" : "Parolni ko'rsatish"}
+                >
+                  {showLoginPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
             </div>
-
-            {/* Hint Box for User */}
-            <div className="p-3 bg-blue-50 border border-blue-100 rounded-xl text-[11px] text-jio-blue space-y-1">
-              <p className="font-bold flex items-center gap-1">
-                <ShieldCheck className="w-3.5 h-3.5" /> Joriy Admin Kirish Ma'lumotlari:
-              </p>
-              <p>• Login: <strong>{adminCredentials.username}</strong></p>
-              <p>• Parol: <strong>{adminCredentials.password}</strong></p>
-            </div>
-
-            {/* Fast 1-Click Login Button */}
-            <button
-              type="button"
-              onClick={() => adminLogin(adminCredentials.username, adminCredentials.password)}
-              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3.5 rounded-xl font-black text-sm transition shadow-md flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <ShieldCheck className="w-4 h-4" /> 1-Klikda Tezkor Kirish ({adminCredentials.username})
-            </button>
-
-            {/* Direct Open Site Settings Tab Button */}
-            <button
-              type="button"
-              onClick={() => {
-                adminLogin(adminCredentials.username, adminCredentials.password);
-                setActiveTab('site_settings');
-              }}
-              className="w-full bg-blue-50 hover:bg-blue-100 text-blue-900 border border-blue-200 py-3 rounded-xl font-bold text-xs transition flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
-            >
-              <Globe className="w-4 h-4 text-blue-600" />
-              🌐 Sayt Matnlari & Footer Sozlamalariga O'tish
-            </button>
 
             <button
               type="submit"
-              className="w-full bg-jio-blue hover:bg-jio-dark text-white py-3.5 rounded-xl font-black text-sm transition shadow-lg shadow-blue-900/10"
+              className="w-full bg-jio-blue hover:bg-jio-dark text-white py-3.5 rounded-xl font-black text-sm transition shadow-lg shadow-blue-900/10 cursor-pointer active:scale-98"
             >
               Tizimga Kirish
             </button>
@@ -810,14 +816,26 @@ export default function AdminPage() {
             </div>
             <div>
               <span className="text-[11px] font-bold text-purple-600 block">Joriy Parol:</span>
-              <span className="text-base font-black text-purple-950 font-mono">{adminCredentials.password}</span>
+              <div className="flex items-center gap-2">
+                <span className="text-base font-black text-purple-950 font-mono">
+                  {showSettingsPassword ? adminCredentials.password : '••••••••'}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setShowSettingsPassword(!showSettingsPassword)}
+                  className="text-purple-600 hover:text-purple-800 p-1 rounded-lg hover:bg-purple-100/50 transition cursor-pointer"
+                  title={showSettingsPassword ? "Parolni yashirish" : "Parolni ko'rsatish"}
+                >
+                  {showSettingsPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
             </div>
             <button
               type="button"
               onClick={resetAdminCredentials}
               className="text-xs font-bold bg-white text-gray-700 hover:text-purple-700 px-3 py-1.5 rounded-xl border border-purple-200 shadow-xs flex items-center gap-1 transition cursor-pointer"
             >
-              <RefreshCw className="w-3.5 h-3.5" /> Standartga Qaytarish (admin/admin123)
+              <RefreshCw className="w-3.5 h-3.5" /> Standartga Qaytarish
             </button>
           </div>
 

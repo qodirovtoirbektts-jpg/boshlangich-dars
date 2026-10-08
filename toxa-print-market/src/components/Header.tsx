@@ -16,7 +16,8 @@ import {
   Edit3,
   X,
   Save,
-  RefreshCw
+  RefreshCw,
+  LogOut
 } from 'lucide-react';
 
 export default function Header() {
@@ -34,7 +35,9 @@ export default function Header() {
     user,
     siteSettings,
     updateSiteSettings,
-    resetSiteSettings
+    resetSiteSettings,
+    isAdmin,
+    adminLogout
   } = useCart();
 
   const s = { ...DEFAULT_SITE_SETTINGS, ...(siteSettings || {}) };
@@ -50,6 +53,7 @@ export default function Header() {
   });
 
   const handleOpenTopEdit = () => {
+    if (!isAdmin) return;
     setTopFormValues({
       topDeliveryText: s.topDeliveryText,
       topGuaranteeText: s.topGuaranteeText,
@@ -62,6 +66,7 @@ export default function Header() {
 
   const handleSaveTopBar = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isAdmin) return;
     updateSiteSettings(topFormValues);
     setIsTopBarEditOpen(false);
   };
@@ -83,23 +88,45 @@ export default function Header() {
           </div>
 
           <div className="flex items-center gap-3">
-            {/* Instant 1-Click Top Bar Edit Button */}
-            <button
-              onClick={handleOpenTopEdit}
-              className="bg-amber-400 hover:bg-amber-300 text-slate-950 font-black px-2.5 py-0.5 rounded-full text-[10px] flex items-center gap-1 transition cursor-pointer shadow-xs"
-              title="Yuqori qatordagi barcha matnlarni bir zumda o'zgartirish"
-            >
-              <Edit3 className="w-2.5 h-2.5 text-slate-950" />
-              Tepani Tahrirlash
-            </button>
+            {/* Faqat ADMIN tizimga kirgan bo'lsa: Tepani Tahrirlash va Admin boshqaruvi */}
+            {isAdmin ? (
+              <div className="flex items-center gap-2 bg-amber-400/15 border border-amber-400/40 px-2.5 py-0.5 rounded-full">
+                <button
+                  onClick={handleOpenTopEdit}
+                  className="bg-amber-400 hover:bg-amber-300 text-slate-950 font-black px-2.5 py-0.5 rounded-full text-[10px] flex items-center gap-1 transition cursor-pointer shadow-xs"
+                  title="Yuqori qatordagi barcha matnlarni bir zumda o'zgartirish"
+                >
+                  <Edit3 className="w-2.5 h-2.5 text-slate-950" />
+                  Tepani Tahrirlash
+                </button>
 
-            <Link
-              href="/admin"
-              className="hover:text-amber-300 transition flex items-center gap-1 text-[11px] font-bold text-amber-300"
-            >
-              <ShieldCheck className="w-3 h-3 text-amber-400" />
-              {s.topAdminLinkText}
-            </Link>
+                <Link
+                  href="/admin"
+                  className="hover:text-amber-300 transition flex items-center gap-1 text-[11px] font-bold text-amber-300"
+                >
+                  <ShieldCheck className="w-3 h-3 text-amber-400" />
+                  Admin Panel
+                </Link>
+
+                <button
+                  onClick={adminLogout}
+                  className="hover:text-rose-300 text-rose-400 text-[10px] font-bold flex items-center gap-0.5 transition cursor-pointer px-1 py-0.5"
+                  title="Admin rejimidan chiqish"
+                >
+                  <LogOut className="w-2.5 h-2.5" />
+                  Chiqish
+                </button>
+              </div>
+            ) : (
+              <Link
+                href="/admin"
+                className="opacity-70 hover:opacity-100 hover:text-amber-300 transition flex items-center gap-1 text-[11px] font-medium text-gray-300"
+                title="Tizim administratori kirishi"
+              >
+                <ShieldCheck className="w-3 h-3 text-amber-400/70" />
+                Admin
+              </Link>
+            )}
             <button 
               onClick={() => setIsB2BPortalOpen(true)}
               className="hover:text-jio-sparkle transition flex items-center gap-1 text-[11px] font-semibold cursor-pointer"
@@ -212,8 +239,8 @@ export default function Header() {
         </div>
       </header>
 
-      {/* INSTANT TOP BAR EDIT MODAL */}
-      {isTopBarEditOpen && (
+      {/* INSTANT TOP BAR EDIT MODAL - FAQAT ADMIN UCHUN */}
+      {isAdmin && isTopBarEditOpen && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-white rounded-3xl max-w-lg w-full p-6 md:p-8 space-y-6 shadow-2xl border border-gray-100">
             <div className="flex items-center justify-between border-b border-gray-100 pb-3">

@@ -7,7 +7,7 @@ import { DEFAULT_SITE_SETTINGS, SiteSettings } from '../data/siteSettings';
 import Link from 'next/link';
 
 export default function Footer() {
-  const { siteSettings, updateSiteSettings, resetSiteSettings } = useCart();
+  const { siteSettings, updateSiteSettings, resetSiteSettings, isAdmin } = useCart();
   
   // Safe fallback to guarantee no field is ever undefined or blank
   const s: SiteSettings = { ...DEFAULT_SITE_SETTINGS, ...(siteSettings || {}) };
@@ -17,12 +17,14 @@ export default function Footer() {
   const [editValues, setEditValues] = useState<SiteSettings>(s);
 
   const handleOpenEdit = () => {
+    if (!isAdmin) return;
     setEditValues(s);
     setIsEditingModal(true);
   };
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isAdmin) return;
     updateSiteSettings(editValues);
     setIsEditingModal(false);
   };
@@ -31,29 +33,31 @@ export default function Footer() {
     <>
       <footer className="bg-white border-t border-gray-200 mt-16 text-gray-600 text-xs">
         
-        {/* Quick Edit Banner for Admin */}
-        <div className="bg-amber-50 border-b border-amber-200 py-2 px-4">
-          <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-            <span className="text-[11px] md:text-xs font-bold text-amber-900 flex items-center gap-1.5">
-              <Edit3 className="w-3.5 h-3.5 text-amber-700" />
-              Saytning pastki qismidagi barcha matnlarni xohlagancha o'zgartirishingiz mumkin:
-            </span>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={handleOpenEdit}
-                className="bg-amber-500 hover:bg-amber-600 text-slate-900 text-[11px] font-black px-3.5 py-1 rounded-full shadow-xs transition flex items-center gap-1 cursor-pointer"
-              >
-                <Edit3 className="w-3 h-3" /> Footer Matnlarini Tahrirlash Oynasi
-              </button>
-              <Link
-                href="/admin"
-                className="text-[11px] font-bold text-jio-blue hover:underline flex items-center gap-1"
-              >
-                Admin Panel &rarr;
-              </Link>
+        {/* Quick Edit Banner for Admin - FAQAT ADMIN UCHUN */}
+        {isAdmin && (
+          <div className="bg-amber-50 border-b border-amber-200 py-2 px-4">
+            <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+              <span className="text-[11px] md:text-xs font-bold text-amber-900 flex items-center gap-1.5">
+                <Edit3 className="w-3.5 h-3.5 text-amber-700" />
+                Saytning pastki qismidagi barcha matnlarni xohlagancha o'zgartirishingiz mumkin:
+              </span>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={handleOpenEdit}
+                  className="bg-amber-500 hover:bg-amber-600 text-slate-900 text-[11px] font-black px-3.5 py-1 rounded-full shadow-xs transition flex items-center gap-1 cursor-pointer"
+                >
+                  <Edit3 className="w-3 h-3" /> Footer Matnlarini Tahrirlash Oynasi
+                </button>
+                <Link
+                  href="/admin"
+                  className="text-[11px] font-bold text-jio-blue hover:underline flex items-center gap-1"
+                >
+                  Admin Panel &rarr;
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* Top Value Badges */}
         <div className="border-b border-gray-100 py-8 px-4 md:px-8">
@@ -175,8 +179,8 @@ export default function Footer() {
 
       </footer>
 
-      {/* QUICK FOOTER EDIT MODAL */}
-      {isEditingModal && (
+      {/* QUICK FOOTER EDIT MODAL - FAQAT ADMIN UCHUN */}
+      {isAdmin && isEditingModal && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
           <div className="bg-white rounded-3xl max-w-3xl w-full p-6 md:p-8 space-y-6 max-h-[90vh] overflow-y-auto shadow-2xl">
             <div className="flex items-center justify-between border-b border-gray-100 pb-4">

@@ -258,27 +258,20 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     showToast("Mahsulotlar boshlang'ich holatga qaytarildi", 'info');
   };
 
-  // Admin login tekshiruvi: yangilangan login/parol yoki boshlang'ich standart
+  // Admin login tekshiruvi: faqat to'g'ri admin login va maxfiy paroli bilan kirish
   const adminLogin = (loginStr: string, passStr: string): boolean => {
     const l = (loginStr || '').trim().toLowerCase();
     const p = (passStr || '').trim();
 
-    // Maxsus yangilangan ma'lumotlar bilan tekshirish
-    const matchesCurrent = 
-      l === adminCredentials.username.toLowerCase() && 
-      p === adminCredentials.password;
+    const expectedLogin = (adminCredentials.username || 'admin').trim().toLowerCase();
+    const expectedPass = (adminCredentials.password || 'admin123').trim();
 
-    // Boshlang'ich standart loginlar xavfsizlik uchun
-    const validLogins = ['admin', 'toxa', '777', 'qodirov', '+998900000000', 'root', 'user'];
-    const validPasswords = ['admin123', 'admin', '123456', '1234', '7777', 'toxa'];
-    const matchesDefault = validLogins.includes(l) && validPasswords.includes(p);
-    
-    if (matchesCurrent || matchesDefault) {
+    if (l === expectedLogin && p === expectedPass) {
       setIsAdmin(true);
       showToast("Admin paneliga muvaffaqiyatli kirdingiz!", 'success');
       return true;
     }
-    showToast(`Login yoki parol noto'g'ri!`, 'warning');
+    showToast("Login yoki parol noto'g'ri!", 'warning');
     return false;
   };
 
@@ -317,6 +310,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const adminLogout = () => {
     setIsAdmin(false);
+    try {
+      localStorage.setItem('tpm_is_admin', JSON.stringify(false));
+    } catch {}
     showToast("Admin rejimidan chiqildi", 'info');
   };
 

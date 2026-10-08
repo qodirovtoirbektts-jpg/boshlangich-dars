@@ -33,6 +33,20 @@ export default function Home() {
     catalogRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  // URL hash yoki parametr orqali printer bo'limiga to'g'ridan-to'g'ri o'tish
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const hash = window.location.hash.toLowerCase();
+      const params = new URLSearchParams(window.location.search);
+      const cat = params.get('category');
+      if (cat) {
+        setActiveCategory(cat);
+      } else if (hash.includes('printer')) {
+        setActiveCategory('printers');
+      }
+    }
+  }, []);
+
   // Filter products
   const filteredProducts = products.filter((p) => {
     if (activeCategory !== 'all') {
@@ -95,7 +109,7 @@ export default function Home() {
       </section>
 
       {/* 5. Asosiy Mahsulotlar Katalogi */}
-      <section ref={catalogRef} className="scroll-mt-24 space-y-6">
+      <section ref={catalogRef} id="catalog" className="scroll-mt-24 space-y-6">
         
         {/* Catalog Header & Filters */}
         <div className="bg-white p-5 md:p-6 rounded-3xl border border-gray-100 shadow-sm space-y-4">
