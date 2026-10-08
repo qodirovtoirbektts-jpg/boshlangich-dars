@@ -1,4 +1,11 @@
 export interface SiteSettings {
+  // Eng Yuqori E'lonlar Tasmasi (Top Announcement Bar)
+  topDeliveryText: string;
+  topGuaranteeText: string;
+  topAdminLinkText: string;
+  topB2BText: string;
+  topPhoneText: string;
+
   // B2B Korporativ Xizmatlar Bo'limi
   b2bBadge: string;
   b2bTitle: string;
@@ -51,6 +58,13 @@ export interface SiteSettings {
 }
 
 export const DEFAULT_SITE_SETTINGS: SiteSettings = {
+  // Top Announcement Bar
+  topDeliveryText: "O'zbekistonning barcha 14 hududiga tezkor yetkazib berish",
+  topGuaranteeText: '100% Original mahsulotlar kafolati',
+  topAdminLinkText: 'Admin Panel',
+  topB2BText: 'Didox & 1C B2B Integratsiya',
+  topPhoneText: '+998 (71) 200-00-00',
+
   // B2B Section
   b2bBadge: 'B2B Korporativ Xizmatlar',
   b2bTitle: 'Didox orqali elektron hujjat aylanishi va 1C integratsiyasi',

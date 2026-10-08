@@ -945,6 +945,84 @@ export default function AdminPage() {
             }}
             className="space-y-8"
           >
+            {/* 0. TOP ANNOUNCEMENT BAR SECTION */}
+            <div className="space-y-4 p-5 bg-amber-50/60 rounded-2xl border border-amber-200">
+              <h4 className="font-black text-sm text-amber-950 flex items-center gap-2">
+                <Truck className="w-4 h-4 text-amber-700" />
+                🔝 Eng Yuqori E'lonlar Tasmasi (Sayt Boshidagi Qora/Ko'k Chiziq)
+              </h4>
+              <p className="text-xs text-amber-800">
+                Sayt ochilganda eng tepada turadigan yetkazib berish, kafolat, admin havola, Didox va telefon yozuvlari
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">
+                    1. Tezkor yetkazib berish matni:
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formSiteSettings.topDeliveryText}
+                    onChange={(e) => setFormSiteSettings({ ...formSiteSettings, topDeliveryText: e.target.value })}
+                    className="w-full bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:border-amber-600 focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">
+                    2. Original mahsulotlar kafolati matni:
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formSiteSettings.topGuaranteeText}
+                    onChange={(e) => setFormSiteSettings({ ...formSiteSettings, topGuaranteeText: e.target.value })}
+                    className="w-full bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:border-amber-600 focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">
+                    3. Admin havola matni:
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formSiteSettings.topAdminLinkText}
+                    onChange={(e) => setFormSiteSettings({ ...formSiteSettings, topAdminLinkText: e.target.value })}
+                    className="w-full bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:border-amber-600 focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">
+                    4. Didox & 1C Integratsiya matni:
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formSiteSettings.topB2BText}
+                    onChange={(e) => setFormSiteSettings({ ...formSiteSettings, topB2BText: e.target.value })}
+                    className="w-full bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:border-amber-600 focus:outline-none"
+                  />
+                </div>
+
+                <div className="md:col-span-2">
+                  <label className="block text-xs font-bold text-gray-700 mb-1">
+                    5. Tepada ko'rinuvchi Telefon raqami:
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formSiteSettings.topPhoneText}
+                    onChange={(e) => setFormSiteSettings({ ...formSiteSettings, topPhoneText: e.target.value })}
+                    className="w-full bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:border-amber-600 focus:outline-none"
+                  />
+                </div>
+              </div>
+            </div>
+
             {/* 1. B2B SECTION */}
             <div className="space-y-4 p-5 bg-purple-50/50 rounded-2xl border border-purple-100">
               <h4 className="font-black text-sm text-purple-950 flex items-center gap-2">

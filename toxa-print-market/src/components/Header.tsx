@@ -3,13 +3,14 @@
 import React from 'react';
 import Link from 'next/link';
 import { useCart } from '../context/CartContext';
+import { DEFAULT_SITE_SETTINGS } from '../data/siteSettings';
 import { 
   Search, 
   ShoppingCart, 
   User as UserIcon, 
   Truck, 
   Building2, 
-  Sparkles,
+  Sparkles, 
   PhoneCall,
   ShieldCheck
 } from 'lucide-react';
@@ -26,8 +27,11 @@ export default function Header() {
     setIsTrackingOpen,
     setIsWizardOpen,
     setIsB2BPortalOpen,
-    user
+    user,
+    siteSettings
   } = useCart();
+
+  const s = { ...DEFAULT_SITE_SETTINGS, ...(siteSettings || {}) };
 
   return (
     <>
@@ -37,11 +41,11 @@ export default function Header() {
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1.5 font-medium">
               <Truck className="w-3.5 h-3.5 text-jio-sparkle" />
-              O'zbekistonning barcha 14 hududiga tezkor yetkazib berish
+              {s.topDeliveryText}
             </span>
             <span className="hidden lg:flex items-center gap-1 opacity-75">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-              100% Original mahsulotlar kafolati
+              {s.topGuaranteeText}
             </span>
           </div>
 
@@ -51,21 +55,21 @@ export default function Header() {
               className="hover:text-amber-300 transition flex items-center gap-1 text-[11px] font-bold text-amber-300"
             >
               <ShieldCheck className="w-3 h-3 text-amber-400" />
-              Admin Panel
+              {s.topAdminLinkText}
             </Link>
             <button 
               onClick={() => setIsB2BPortalOpen(true)}
-              className="hover:text-jio-sparkle transition flex items-center gap-1 text-[11px] font-semibold"
+              className="hover:text-jio-sparkle transition flex items-center gap-1 text-[11px] font-semibold cursor-pointer"
             >
               <Building2 className="w-3 h-3 text-jio-sparkle" />
-              Didox & 1C B2B Integratsiya
+              {s.topB2BText}
             </button>
             <a 
-              href="tel:+998712000000" 
+              href={`tel:${s.topPhoneText.replace(/[^\d+]/g, '')}`} 
               className="flex items-center gap-1 font-semibold hover:text-jio-sparkle transition"
             >
               <PhoneCall className="w-3 h-3 text-jio-sparkle" />
-              +998 (71) 200-00-00
+              {s.topPhoneText}
             </a>
           </div>
         </div>

@@ -198,6 +198,63 @@ export default function Footer() {
             </div>
 
             <form onSubmit={handleSave} className="space-y-6">
+              {/* 0. Top Announcement Bar */}
+              <div className="p-4 bg-amber-50/60 rounded-2xl space-y-3 border border-amber-200">
+                <h4 className="font-bold text-xs text-amber-950 uppercase">🔝 Eng Yuqori E'lonlar Tasmasi (Top Bar)</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div>
+                    <label className="text-[10px] font-bold text-gray-500 block mb-0.5">1. Yetkazib berish matni:</label>
+                    <input
+                      type="text"
+                      value={editValues.topDeliveryText}
+                      onChange={(e) => setEditValues({ ...editValues, topDeliveryText: e.target.value })}
+                      placeholder="O'zbekistonning barcha 14 hududiga tezkor yetkazib berish"
+                      className="w-full bg-white border border-gray-200 rounded-xl px-3 py-2 text-xs font-semibold"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-bold text-gray-500 block mb-0.5">2. Kafolat matni:</label>
+                    <input
+                      type="text"
+                      value={editValues.topGuaranteeText}
+                      onChange={(e) => setEditValues({ ...editValues, topGuaranteeText: e.target.value })}
+                      placeholder="100% Original mahsulotlar kafolati"
+                      className="w-full bg-white border border-gray-200 rounded-xl px-3 py-2 text-xs font-semibold"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-bold text-gray-500 block mb-0.5">3. Admin havola matni:</label>
+                    <input
+                      type="text"
+                      value={editValues.topAdminLinkText}
+                      onChange={(e) => setEditValues({ ...editValues, topAdminLinkText: e.target.value })}
+                      placeholder="Admin Panel"
+                      className="w-full bg-white border border-gray-200 rounded-xl px-3 py-2 text-xs font-semibold"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-bold text-gray-500 block mb-0.5">4. Didox tugma matni:</label>
+                    <input
+                      type="text"
+                      value={editValues.topB2BText}
+                      onChange={(e) => setEditValues({ ...editValues, topB2BText: e.target.value })}
+                      placeholder="Didox & 1C B2B Integratsiya"
+                      className="w-full bg-white border border-gray-200 rounded-xl px-3 py-2 text-xs font-semibold"
+                    />
+                  </div>
+                  <div className="md:col-span-2">
+                    <label className="text-[10px] font-bold text-gray-500 block mb-0.5">5. Yuqoridagi Telefon raqami:</label>
+                    <input
+                      type="text"
+                      value={editValues.topPhoneText}
+                      onChange={(e) => setEditValues({ ...editValues, topPhoneText: e.target.value })}
+                      placeholder="+998 (71) 200-00-00"
+                      className="w-full bg-white border border-gray-200 rounded-xl px-3 py-2 text-xs font-semibold"
+                    />
+                  </div>
+                </div>
+              </div>
+
               {/* 1. Value Badges */}
               <div className="p-4 bg-gray-50 rounded-2xl space-y-3">
                 <h4 className="font-bold text-xs text-gray-700 uppercase">4 ta Afzallik Kartasi</h4>
